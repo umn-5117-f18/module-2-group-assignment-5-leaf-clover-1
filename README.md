@@ -27,20 +27,20 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 **[Add a screenshot of each key page (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
 
-![](https://media.giphy.com/media/XIqCQx02E1U9W/giphy.gif)
+![](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif)
 
 
 ## Paper Prototype
 
 **[Add images/photos that show your paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
 
-![](https://media.giphy.com/media/3oEdv1EbS2Ss1NvrUc/giphy.gif)
+![](https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif)
 
 
 ## External Dependencies
 
 **Document integrations with 3rd Party code or services here.
-Please do not document required libraries (e.g., Flask, jQuery, Pure).**
+Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 
 * Library or service name: description of use
 * ...
