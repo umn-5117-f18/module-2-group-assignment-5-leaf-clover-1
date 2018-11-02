@@ -21,6 +21,12 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 * ...
 
+## Testing Notes
+
+**Is there anything special we need to know in order to effectively test your app? (optional):**
+
+* ...
+
 
 ## Screenshots of Site
 
