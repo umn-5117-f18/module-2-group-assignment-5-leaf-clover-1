@@ -27,7 +27,7 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 **[Add a screenshot of each key page (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
 
-![](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif)
+![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
 
 
 ## Paper Prototype
