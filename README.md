@@ -21,6 +21,15 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 * ...
 
+Which device integration(s) does your app support?
+
+* ...
+
+Which progressive web app feature(s) does your app support?
+
+* ...
+
+
 ## Testing Notes
 
 **Is there anything special we need to know in order to effectively test your app? (optional):**
