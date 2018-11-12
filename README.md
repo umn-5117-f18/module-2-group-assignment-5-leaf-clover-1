@@ -4,14 +4,17 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
-* App Link: <https://TODO.firebaseapp.com/>
+* Team Name: 5 Leaf Clover
+* App Name: app.ly
+* App Link: <https://app-ly.firebaseapp.com/>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
+* Bridger Herman
+* Kate Kuehl
+* Nikki Kyllonen
+* Jinshi Lu
+* Emily Moeller
 
 
 ## Key Features
@@ -49,7 +52,13 @@ along with a very brief caption:**
 
 **[Add images/photos that show your paper prototype (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
 
-![](https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif)
+![Mobile site prototype](./images/mobile_design.jpg)
+
+Progression through the mobile version of the app
+
+![Desktop site prototype](./images/desktop_design.jpg)
+
+Progression through the Desktop version of the app
 
 
 ## External Dependencies
