@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <header>
+      <div id="nav">
+        <router-link to="/master-resume">Master Resume</router-link>
+      </div>
+    </header>
+
     <h1>app.ly</h1>
     <h2>Organize your job applications - get your dream job</h2>
     <router-view/>
