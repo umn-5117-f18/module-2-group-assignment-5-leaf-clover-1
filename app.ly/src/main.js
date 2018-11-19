@@ -8,6 +8,9 @@ import router from './router';
 import "./firebaseConfig";
 
 
+// Require the main Sass manifest file
+require('./assets/sass/main.scss');
+
 Vue.use(VueFire);
 
 Vue.config.productionTip = false;

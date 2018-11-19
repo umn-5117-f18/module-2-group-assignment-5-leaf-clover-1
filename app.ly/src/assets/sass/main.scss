@@ -1,0 +1,20 @@
+@import '~bulma/bulma', url('https://fonts.googleapis.com/css?family=Lily+Script+One|Mallanna');
+
+// Variables
+$title-font: Lily Script One, cursive;
+$font-stack: Mallanna, sans-serif;
+$primary-color: #2ba6cb;
+
+title, h1 {
+    font-family: $title-font;
+    font-size: 5em;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: $font-stack;
+}
+
+h2 {
+    font-size: 2em;
+}
+

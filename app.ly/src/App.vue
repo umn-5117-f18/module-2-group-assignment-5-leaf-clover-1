@@ -4,6 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
+    <h1>app.ly</h1>
+    <h2>Organize your job applications - get your dream job</h2>
     <router-view/>
   </div>
 </template>
