@@ -1,6 +1,5 @@
 <template>
     <div class="application">
-        <h3>I am the application cards.</h3>
         <div class="columns is-centered">
             <article v-for="value in [1, 2, 3]">
                 <Card/>

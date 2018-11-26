@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h2>Organize your job applications - get your dream job</h2>
     <br>
     <div class="columns">
       <div class="column">

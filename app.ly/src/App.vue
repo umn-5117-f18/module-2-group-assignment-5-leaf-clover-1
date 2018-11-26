@@ -11,7 +11,6 @@
     </header>
 
     <h1>app.ly</h1>
-    <h2>Organize your job applications - get your dream job</h2>
     <router-view/>
     <Footer/>
   </div>
