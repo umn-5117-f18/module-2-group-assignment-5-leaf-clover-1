@@ -1,10 +1,11 @@
 <template>
     <div class="application">
         <h3>I am the application cards.</h3>
-        <article v-for="value in [1, 2, 3]">
-            <Card/>
-        </article>
-        <Footer/>
+        <div class="columns is-centered">
+            <article v-for="value in [1, 2, 3]">
+                <Card/>
+            </article>
+        </div>
     </div>
 </template>
 

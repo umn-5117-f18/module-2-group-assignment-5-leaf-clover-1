@@ -1,5 +1,7 @@
 <template>
-  <div class="card">
-    I am a card
-  </div>
+    <div class="column is-primary">
+        <div class="card">
+            I am a card
+        </div>
+    </div>
 </template>
