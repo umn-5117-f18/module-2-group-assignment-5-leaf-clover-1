@@ -1,9 +1,7 @@
 <template>
   <div class="master-resume">
-    <h2>Your Master Resume</h2>
-    <article v-for="item in resumeSections">
-      <ResumeSection v-bind:msg="item"/>
-    </article>
+    <h1>Your Master Resume</h1>
+    <div v-html="buildResumeTree"></div>
     <Footer/>
   </div>
 </template>
@@ -25,6 +23,72 @@ export default {
       this.$router.replace('/')
       })
     }
+  },
+
+  computed: {
+    buildResumeTree: function() {
+      return this.eachRecursive(testResume, 0, '');
+    }
+  },
+
+  methods: {
+    resumeTree: function(obj, level) {
+      for (let x in obj) {
+        if (typeof(obj[x])== 'object' && obj[x] !== null) {
+          return this.resumeTree(obj[x], level + 1);
+        } else {
+          return this.makeElement(level, obj[x], level);
+        }
+      }
+    },
+
+    eachRecursive: function(obj, level, result) {
+      if (typeof obj == 'object' && obj !== null) {
+        let tmpResult = '';
+        for (var k in obj) {
+          tmpResult += this.makeElement(level, k) + this.eachRecursive(obj[k], level + 1, result);
+        }
+        return tmpResult;
+      } else {
+        return this.makeElement(level, obj);
+      }
+    },
+
+    makeElement: function(level, text) {
+      return '<div class="resume-section resume-section-' + level + '">' + text + '</div>';
+    },
   }
-}
+};
 </script>
+
+<style>
+.master-resume {
+  display: inline-block;
+  width: 50%
+}
+
+.resume-section {
+  text-align: left;
+}
+
+.resume-section-0 {
+  font-size: 20pt;
+  font-weight: bold;
+}
+.resume-section-1 {
+  font-size: 18pt;
+  padding-left: 10pt;
+}
+.resume-section-2 {
+  font-size: 16pt;
+  padding-left: 20pt;
+}
+.resume-section-3 {
+  font-size: 12pt;
+  padding-left: 30pt;
+}
+.resume-section-4 {
+  font-size: 10pt;
+  padding-left: 40pt;
+}
+</style>
