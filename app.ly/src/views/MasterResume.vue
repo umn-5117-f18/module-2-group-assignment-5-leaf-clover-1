@@ -16,13 +16,6 @@ export default {
   components: {
     ResumeSection
   },
-  methods: {
-    logout: function() {
-      firebase.auth().signOut().then(()=> {
-      this.$router.replace('/')
-      })
-    }
-  },
 
   computed: {
     buildResumeTree: function() {
@@ -31,6 +24,12 @@ export default {
   },
 
   methods: {
+    logout: function() {
+      firebase.auth().signOut().then(()=> {
+      this.$router.replace('/')
+      })
+    },
+
     resumeTree: function(obj, level) {
       for (let x in obj) {
         if (typeof(obj[x])== 'object' && obj[x] !== null) {

@@ -27,6 +27,8 @@
                 </footer>
          </div>
     </div>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -79,5 +81,6 @@ export default {
             }
         } // END deleteCard()
     }
+  }
 }
 </script>
