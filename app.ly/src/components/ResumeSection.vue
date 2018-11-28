@@ -1,5 +1,5 @@
 <template>
-  <h2>I am a Section {{ msg }}</h2>
+  <h3>I am a Section {{ msg }}</h3>
 </template>
 
 <script>

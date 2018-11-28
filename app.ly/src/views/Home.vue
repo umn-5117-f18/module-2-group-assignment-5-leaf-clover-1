@@ -1,19 +1,15 @@
 <template>
   <div class="home">
-    <article v-for="value in [1, 2, 3]">
-      <Card/>
-    </article>
+    <h2>Organize your job applications - get your dream job</h2>
+    <br>
+    <div class="columns">
+      <div class="column">
+        <a class="button is-primary is-large">Login</a>
+      </div>
+      <div class="column">
+        <a class="button is-primary is-large">Register</a>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import Card from '@/components/Card.vue'
-
-export default {
-  name: 'home',
-  components: {
-    Card
-  }
-}
-</script>
