@@ -3,7 +3,10 @@
 // Variables
 $title-font: Lily Script One, cursive;
 $font-stack: Mallanna, sans-serif;
-$primary-color: #2ba6cb;
+$primary-color: #0052A1;
+$dark: #2c3e50;
+$light: #ffedff;
+$light-highlight: #22D4C7;
 
 html,
 body {
@@ -21,6 +24,10 @@ body {
 #body {
    padding:10px;
    padding-bottom:60px;   /* Height of the footer */
+}
+
+header {
+  background-color: $primary-color;
 }
 
 title, h1 {
@@ -45,19 +52,19 @@ h2 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $dark;
 }
 #nav {
   padding: 30px;
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  color: $light;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  font-weight: bold;
+  color: $light-highlight;
 }
 
 #footer {

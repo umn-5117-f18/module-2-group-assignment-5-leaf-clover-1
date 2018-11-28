@@ -1,6 +1,5 @@
 <template>
   <div class="master-resume">
-    <h1>Your Master Resume</h1>
     <div v-html="buildResumeTree"></div>
     <Footer/>
   </div>
@@ -62,9 +61,14 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 1000px) {
+  .master-resume {
+    width: 90%;
+  }
+}
+
 .master-resume {
   display: inline-block;
-  width: 50%
 }
 
 .resume-section {
