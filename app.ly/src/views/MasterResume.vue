@@ -9,6 +9,7 @@
 import firebase from 'firebase'
 import ResumeSection from '@/components/ResumeSection.vue'
 import { testResume } from '@/testResume'
+import { resumeParser } from '@/resumeTree'
 
 export default {
   name: 'MasterResume',
@@ -19,7 +20,7 @@ export default {
 
   computed: {
     buildResumeTree: function() {
-      return this.eachRecursive(testResume, 0, '');
+      return resumeParser.resumeTree(testResume, 0, '');
     }
   },
 

@@ -9,6 +9,7 @@ import ApplicationList from './views/ApplicationList.vue'
 import Application from './views/Application.vue'
 import Registration from './views/Registration.vue'
 import AppPage from './views/AppPage.vue'
+import ResumeBuilder from './views/ResumeBuilder.vue'
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/applications/:name/resume-builder',
+      name: 'resume-builder',
+      component: ResumeBuilder
     },
     {
       path: '/about',
