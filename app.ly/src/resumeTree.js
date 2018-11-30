@@ -12,19 +12,29 @@ export const resumeParser = {
     }
   },
 
-  resumeTreeList(obj, level) {
+  resumeTreeList(obj, level, makeElements, maxLevel) {
     if (typeof obj == 'object' && obj !== null) {
       let tmpResult = [];
       for (var k in obj) {
-        tmpResult.push(this.makeElement(level, k))
-        let subSections = this.resumeTreeList(obj[k], level + 1);
-        for (var x in subSections) {
-          tmpResult.push(subSections[x]);
+        if (makeElements) {
+          tmpResult.push(this.makeElement(level, k));
+        } else {
+          tmpResult.push([k, level]);
+        }
+        if (maxLevel && level < maxLevel) {
+          let subSections = this.resumeTreeList(obj[k], level + 1, makeElements, maxLevel);
+          for (var x in subSections) {
+            tmpResult.push(subSections[x]);
+          }
         }
       }
       return tmpResult;
     } else {
-      return [this.makeElement(level, obj)]
+      if (makeElements) {
+        return [this.makeElement(level, obj)];
+      } else {
+        return [[obj, level]];
+      }
     }
   },
 
