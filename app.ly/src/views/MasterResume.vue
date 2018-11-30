@@ -1,26 +1,46 @@
 <template>
   <div class="master-resume">
+    <a id="edit-button" v-on:click="toggleEdit" class="spacious button is-primary">Edit Master Resume</a>
     <div v-html="buildResumeTree"></div>
-    <Footer/>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-import ResumeSection from '@/components/ResumeSection.vue'
 import { testResume } from '@/testResume'
 import { resumeParser } from '@/resumeTree'
 
 export default {
   name: 'MasterResume',
 
-  components: {
-    ResumeSection
+  data: function() {
+    return {
+      editing: false,
+    }
   },
 
   computed: {
     buildResumeTree: function() {
-      return resumeParser.resumeTree(testResume, 0, '');
+      let resumeList = resumeParser.resumeTreeList(testResume, 0, false, 5);
+      let depths = resumeList.map((item) => item[1]);
+
+      let output = '';
+      for (let i in resumeList) {
+        let resumeDepth = resumeList[i][1];
+        let resumeItem = resumeList[i][0];
+        let extra = '';
+        if (this.editing && (resumeDepth == 0 && depths.slice(0, i).filter((d) => d === resumeDepth).length === 0
+          || resumeDepth == 1)) {
+          extra = '<a class="button resume-section-' +
+            resumeDepth + '">Add Section</a>';
+        }
+        output += '<li class="resume-section resume-section-' +
+          resumeDepth + '">'
+            + extra
+            + resumeItem
+          + '</li>';
+      }
+      return '<ul>' + output + '</ul>';
     }
   },
 
@@ -56,7 +76,16 @@ export default {
     makeElement: function(level, text) {
       return '<div class="resume-section resume-section-' + level + '">' + text + '</div>';
     },
-  }
+
+    toggleEdit: function() {
+      this.editing = !this.editing;
+      if (!this.editing) {
+        document.getElementById('edit-button').innerHTML = 'Edit Master Resume';
+      } else {
+        document.getElementById('edit-button').innerHTML = 'Stop Editing';
+      }
+    },
+  },
 };
 </script>
 
@@ -65,6 +94,15 @@ export default {
   .master-resume {
     width: 90%;
   }
+}
+
+.spacious {
+  margin: 20px auto;
+  font-weight: bold;
+}
+
+.master-resume a {
+  display: block;
 }
 
 .master-resume {
