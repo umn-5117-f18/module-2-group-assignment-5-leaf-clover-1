@@ -2,7 +2,7 @@
     <div class="application">
         <div class="columns is-centered">
             <article v-for="value in [1, 2, 3]">
-                <Card/>
+                <Card v-bind:idx='value'/>
             </article>
         </div>
     </div>
