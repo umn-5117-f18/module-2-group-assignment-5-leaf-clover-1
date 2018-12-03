@@ -22,22 +22,21 @@ export default {
   computed: {
     buildResumeTree: function() {
       let resumeList = resumeParser.resumeTreeList(testResume, 0, false, 5);
-      let depths = resumeList.map((item) => item[1]);
-
       let output = '';
       for (let i in resumeList) {
         let resumeDepth = resumeList[i][1];
         let resumeItem = resumeList[i][0];
         let extra = '';
-        if (this.editing && (resumeDepth == 0 && depths.slice(0, i).filter((d) => d === resumeDepth).length === 0
-          || resumeDepth == 1)) {
-          extra = '<a class="button resume-section-' +
-            resumeDepth + '">Add Section</a>';
+        if (this.editing && resumeDepth == 0) {
+          extra = '<a href="/master-resume/new-section/'
+            + resumeItem
+            + '" class="button resume-section-' + resumeDepth
+            + '">Add Section</a>';
         }
         output += '<li class="resume-section resume-section-' +
           resumeDepth + '">'
-            + extra
             + resumeItem
+            + extra
           + '</li>';
       }
       return '<ul>' + output + '</ul>';
