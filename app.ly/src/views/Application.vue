@@ -1,8 +1,8 @@
 <template>
     <div class="application">
-        <button v-on:click="logout">Sign Out</button>
+        <button a class="button" v-on:click="logout">Sign Out</button>
         <div class="columns is-centered">
-            <article v-for="value in [1, 2, 3]">
+            <article v-for="value in [1, 2, 3]" :key="value">
                 <Card/>
             </article>
         </div>
@@ -13,6 +13,7 @@
 <script>
 // @ is an alias to /src
 import Card from '@/components/Card.vue'
+import firebase from 'firebase'
 
 export default {
   name: 'home',
