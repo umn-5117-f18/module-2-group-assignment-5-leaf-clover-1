@@ -11,4 +11,7 @@ var config = {
     storageBucket: "app-ly-5c24f.appspot.com",
     messagingSenderId: "1007082478240"
   };
+
+  const provider = new firebase.auth.GoogleAuthProvider()
   firebase.initializeApp(config);
+  export {provider};
