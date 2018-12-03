@@ -4,7 +4,7 @@
     <br>
     <div class="columns">
       <div class="column">
-        <a class="button is-primary is-large">Login</a>
+        <button class="button is-primary is-large" v-on:click='googleSignIn'>Sign in with Google</button>
       </div>
       <div class="column">
         <a class="button is-primary is-large">Register</a>
@@ -13,3 +13,23 @@
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+import firebase from 'firebase'
+import {provider} from '../firebaseConfig'
+export default {
+  name: 'home',
+  components: {},
+  methods: {
+      googleSignIn: function() {
+        firebase.auth().signInWithRedirect(provider).then(
+          (result=> {
+            console.log("signed in with google")
+          })
+          .catch(err=>alert(err.message))
+        )
+      }
+    }
+}
+</script>
