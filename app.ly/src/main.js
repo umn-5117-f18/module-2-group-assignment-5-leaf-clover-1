@@ -7,6 +7,10 @@ import App from './App.vue';
 import router from './router';
 import "./firebaseConfig";
 
+// AddToCalendar
+var AddToCalendar = require('vue-add-to-calendar');
+
+Vue.use(AddToCalendar);
 
 // Require the main Sass manifest file
 require('./assets/sass/main.scss');

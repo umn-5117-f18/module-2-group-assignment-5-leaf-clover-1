@@ -7,7 +7,7 @@
                     </p>
                     <a href="#" class="card-header-icon" aria-label="more options">
                         <span class="icon">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                             <Calendar/>
                         </span>
                     </a>
                 </header>
@@ -27,3 +27,15 @@
          </div>
     </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import Calendar from '@/components/Calendar.vue'
+
+export default {
+  name: 'card',
+  components: {
+    Calendar
+  }
+}
+</script>
