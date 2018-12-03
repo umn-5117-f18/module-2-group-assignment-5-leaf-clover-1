@@ -57,7 +57,10 @@ let router = new Router({
     {
       path: '/app/:id',
       id: '0',
-      component: AppPage
+      component: AppPage,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
@@ -66,10 +69,11 @@ router.beforeEach(function(to, from, next) {
   let currentUser = firebase.auth().currentUser
   let requiresAuth = to.matched.some(record=>record.meta.requiresAuth)
   if (requiresAuth && !currentUser) {
-    next('/login')
+    next('/')
   } else if (!requiresAuth && currentUser) {
     console.log("going to applications");
     next('/applications')
+    // next()
   } else {
     console.log("going to next");
     console.log("requiresAuth " + requiresAuth);

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <p>URL path parameter: {{ $route.params.id }}</p>
-    <br>
+    <!-- <p>URL path parameter: {{ $route.params.id }}</p> -->
+    <!-- <br> -->
+    <button a class="button" v-on:click="logout">Sign Out</button>
     <div class="field">
       <label class="label">Job Title:</label>
       <div class="control">
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-// import firebase from 'firebase'
+import firebase from 'firebase'
 // import { db, auth } from '@/firebaseConfig'
 
 export default {
@@ -44,6 +45,11 @@ export default {
   methods: {
     save() {
       console.log('eventually will save changes...');
+    },
+    logout: function() {
+        firebase.auth().signOut().then(()=> {
+        this.$router.replace('/')
+        })
     }
   }
 }
