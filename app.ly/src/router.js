@@ -6,6 +6,7 @@ import Home from './views/Home.vue'
 import MasterResume from './views/MasterResume.vue'
 import Applications from './views/Application.vue'
 import Registration from './views/Registration.vue'
+import AppPage from './views/AppPage.vue'
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ let router = new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    },
+    {
+      path: '/app/:id',
+      id: '0',
+      component: AppPage
     }
   ]
 })

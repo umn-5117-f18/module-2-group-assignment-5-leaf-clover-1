@@ -21,9 +21,28 @@
                 </div>
                 <footer class="card-footer">
                     <a href="#" class="card-footer-item">Save</a>
-                    <a href="#" class="card-footer-item">Edit</a>
+                    <router-link :to="appPath" class="card-footer-item">
+                        Edit
+                    </router-link>
                     <a href="#" class="card-footer-item">Delete</a>
                 </footer>
          </div>
     </div>
 </template>
+
+<script>
+import { db, auth } from '@/firebaseConfig'
+
+export default {
+    name: 'Card',
+    props: {
+        idx: Number
+    },
+    computed:{
+        appPath() {
+            console.log("this.idx: " + this.idx);
+            return '/app/' + this.idx;
+        }
+    }
+}
+</script>
