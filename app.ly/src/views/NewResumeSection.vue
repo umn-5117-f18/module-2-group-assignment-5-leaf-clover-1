@@ -12,7 +12,7 @@
 
       <a class="button" v-on:click="addInput">+</a>
 
-      <input class="button" value="Save" type="submit">
+      <input class="button is-primary" value="Save" type="submit">
     </form>
   </div>
 </template>
