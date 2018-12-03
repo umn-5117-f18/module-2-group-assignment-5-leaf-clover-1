@@ -6,7 +6,7 @@
       <label class="label">Job Title:</label>
       <div class="control">
         <textarea class="textarea" v-model="title"
-          placeholder="Enter title here"></textarea>
+                                   placeholder="Enter title here"></textarea>
       </div>
     </div>
 
@@ -14,7 +14,7 @@
       <label class="label">Job Description:</label>
       <div class="control">
         <textarea class="textarea" v-model="descript"
-          placeholder="Enter description here"></textarea>
+                                   placeholder="Enter description here"></textarea>
       </div>
     </div>
 
@@ -22,13 +22,14 @@
       <label class="label">Company:</label>
       <div class="control">
         <textarea class="textarea" v-model="company"
-          placeholder="Enter company here"></textarea>
+                                   placeholder="Enter company here"></textarea>
       </div>
     </div>
-    
+
     <button class="button is-primary" v-on:click="save">Save</button>
     <button class="button" v-on:click="deleteApp">Delete</button>
 
+    <button class="button is-primary" v-on:click="save">Save</button>
   </div>
 </template>
 
@@ -38,6 +39,7 @@ import { db } from '@/main.js'
 
 export default {
   name: 'AppPage',
+
   data () {
     return {
       name: String,
@@ -47,6 +49,13 @@ export default {
       app: []
     };
   },
+
+  computed: {
+    resumeBuilderUrl: function() {
+      return '/app/' + this.$route.params.id + '/resume-builder';
+    },
+  },
+
   beforeCreate() {
     // grab the name from the route param
     this.name = this.$route.params.id;
@@ -61,7 +70,7 @@ export default {
             // store the data locally
             var data = documentSnapshot.data();
             this.app = data.applications[this.$route.params.id];
-            
+
             this.title = this.app.title;
             this.descript = this.app.description;
             this.company = this.app.company;
@@ -73,6 +82,7 @@ export default {
         console.log('current user is null');
       }
   },
+
   methods: {
     save() {  
       let currentUser = firebase.auth().currentUser;

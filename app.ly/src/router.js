@@ -6,7 +6,6 @@ import { db } from './main.js'
 import Home from './views/Home.vue'
 import MasterResume from './views/MasterResume.vue'
 import ApplicationList from './views/ApplicationList.vue'
-import Application from './views/Application.vue'
 import Registration from './views/Registration.vue'
 import AppPage from './views/AppPage.vue'
 import ResumeBuilder from './views/ResumeBuilder.vue'
@@ -65,9 +64,12 @@ let router = new Router({
       }
     },
     {
-      path: '/applications/:name/resume-builder',
+      path: '/app/:id/resume-builder',
       name: 'resume-builder',
-      component: ResumeBuilder
+      component: ResumeBuilder,
+      meta: {
+        requiresAuth: true
+      },
     },
     {
       path: '/about',

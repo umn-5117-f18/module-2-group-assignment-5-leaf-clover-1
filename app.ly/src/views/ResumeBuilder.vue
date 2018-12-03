@@ -1,7 +1,11 @@
 <template>
   <div class="resume-builder">
     <div v-html="loadedResume"></div>
-    <a class="button">Save</a>
+    <a class="button is-primary">
+      <router-link :to="parentApplicationUrl">
+        Save
+      </router-link>
+    </a>
   </div>
 </template>
 
@@ -23,6 +27,10 @@ export default {
           i + '">' + resumeList[i][0] + '</label></li>';
       }
       return '<ul>' + output + '</ul>';
+    },
+
+    parentApplicationUrl: function() {
+      return '/app/' + this.$route.params.id;
     },
   },
 }
