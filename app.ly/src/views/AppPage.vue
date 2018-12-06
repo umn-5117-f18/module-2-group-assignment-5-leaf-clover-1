@@ -54,12 +54,14 @@ export default {
     docRef.get().then((documentSnapshot) => {
       // check and do something with the data here.
       if (documentSnapshot.exists) {
-        // do something with the data
+        // store the data locally
         var data = documentSnapshot.data();
-        console.log('-->data.applications[]: ', data.applications[this.$route.params.id]);
-        this.title = data.applications[this.$route.params.id].title;
-        this.descript = data.applications[this.$route.params.id].description;
-        this.company = data.applications[this.$route.params.id].company;
+        this.app = data.applications[this.$route.params.id];
+        // console.log('-->data.applications[]: ', data.applications[this.$route.params.id]);
+        
+        this.title = this.app.title;
+        this.descript = this.app.description;
+        this.company = this.app.company;
       } else {
         console.log('document not found');
       }
@@ -67,8 +69,36 @@ export default {
   },
   methods: {
     save() {
-      console.log('eventually will save changes...');
-      console.log(app);
+      console.log('entered save function');
+      
+      var UID = 'user1';
+      var docRef = db.doc('users/' + UID);
+      var apps = [];
+      var mr = [];
+
+      docRef.get().then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          //store current state of applications map
+          var data = documentSnapshot.data();
+          apps = data.applications;
+          mr = data.master_resume;
+
+          // console.log('-->old apps: ', data.applications[this.$route.params.id]);
+
+          apps[this.$route.params.id] = {
+            title: this.title,
+            description: this.descript,
+            company: this.company
+          };
+
+          // set db arrays (need to set BOTH done and incomplete)
+          docRef.set({ applications: apps, master_resume: mr});
+          console.log('updated database');
+          // console.log('-->new apps: ', apps);
+        } else {
+          console.log('document not found');
+        }
+      });
     },
     logout: function() {
         firebase.auth().signOut().then(()=> {
