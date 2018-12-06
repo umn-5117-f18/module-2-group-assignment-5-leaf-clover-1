@@ -3,7 +3,7 @@
         <div class="card">
                 <header class="card-header">
                     <p class="card-header-title">
-                        Component
+                        {{ title }}
                     </p>
                     <a href="#" class="card-header-icon" aria-label="more options">
                         <span class="icon">
@@ -13,8 +13,9 @@
                 </header>
                 <div class="card-content">
                     <div class="content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
+                        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a> -->
+                        {{ descript }}
                         <br>
                         <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
                     </div>
@@ -31,17 +32,19 @@
 </template>
 
 <script>
-import { db, auth } from '@/firebaseConfig'
+import { db } from '@/firebaseConfig'
 
 export default {
     name: 'Card',
     props: {
-        idx: Number
+        name: String,
+        title: String,
+        descript: String
     },
     computed:{
         appPath() {
-            console.log("this.idx: " + this.idx);
-            return '/app/' + this.idx;
+            console.log("this.name: " + this.name);
+            return '/app/' + this.name;
         }
     }
 }
