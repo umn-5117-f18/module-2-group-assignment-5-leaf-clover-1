@@ -71,6 +71,9 @@ export default {
 
                 docRef.set({ applications: apps, master_resume: mr, total_apps: total + 1 })
                 console.log('updated database');
+
+                //redirect to editing page
+                this.$router.push('/app/' + new_name);
             } else {
                 console.log('document not found');
             }
