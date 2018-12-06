@@ -13,8 +13,6 @@
                 </header>
                 <div class="card-content">
                     <div class="content">
-                        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a> -->
                         {{ descript }}
                         <br>
                         <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
@@ -32,8 +30,6 @@
 </template>
 
 <script>
-import { db } from '@/firebaseConfig'
-
 export default {
     name: 'Card',
     props: {
@@ -43,7 +39,6 @@ export default {
     },
     computed:{
         appPath() {
-            console.log("this.name: " + this.name);
             return '/app/' + this.name;
         }
     }

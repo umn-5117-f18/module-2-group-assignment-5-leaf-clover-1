@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- <p>URL path parameter: {{ $route.params.id }}</p> -->
-    <!-- <br> -->
+
     <button a class="button" v-on:click="logout">Sign Out</button>
     <div class="field">
       <label class="label">Job Title:</label>
@@ -47,7 +46,6 @@ export default {
   beforeCreate() {
     // grab the name from the route param
     this.name = this.$route.params.id;
-    // console.log(this.name);
     var UID = 'user1';
     var docRef = db.doc('users/' + UID);
 
@@ -57,7 +55,6 @@ export default {
         // store the data locally
         var data = documentSnapshot.data();
         this.app = data.applications[this.$route.params.id];
-        // console.log('-->data.applications[]: ', data.applications[this.$route.params.id]);
         
         this.title = this.app.title;
         this.descript = this.app.description;
@@ -68,9 +65,7 @@ export default {
     });
   },
   methods: {
-    save() {
-      console.log('entered save function');
-      
+    save() {      
       var UID = 'user1';
       var docRef = db.doc('users/' + UID);
       var apps = [];
@@ -79,14 +74,13 @@ export default {
 
       docRef.get().then((documentSnapshot) => {
         if (documentSnapshot.exists) {
-          //store current state of applications map
+          // store current state of applications map
           var data = documentSnapshot.data();
           apps = data.applications;
           mr = data.master_resume;
           total = data.total_apps;
 
-          // console.log('-->old apps: ', data.applications[this.$route.params.id]);
-
+          // update the map corresponding map item
           apps[this.$route.params.id] = {
             title: this.title,
             description: this.descript,
@@ -96,7 +90,6 @@ export default {
           // set db arrays (need to set all fields)
           docRef.set({ applications: apps, master_resume: mr, total_apps: total});
           console.log('updated database');
-          // console.log('-->new apps: ', apps);
         } else {
           console.log('document not found');
         }
