@@ -75,6 +75,7 @@ export default {
       var docRef = db.doc('users/' + UID);
       var apps = [];
       var mr = [];
+      var total = 0;
 
       docRef.get().then((documentSnapshot) => {
         if (documentSnapshot.exists) {
@@ -82,6 +83,7 @@ export default {
           var data = documentSnapshot.data();
           apps = data.applications;
           mr = data.master_resume;
+          total = data.total_apps;
 
           // console.log('-->old apps: ', data.applications[this.$route.params.id]);
 
@@ -91,8 +93,8 @@ export default {
             company: this.company
           };
 
-          // set db arrays (need to set BOTH done and incomplete)
-          docRef.set({ applications: apps, master_resume: mr});
+          // set db arrays (need to set all fields)
+          docRef.set({ applications: apps, master_resume: mr, total_apps: total});
           console.log('updated database');
           // console.log('-->new apps: ', apps);
         } else {
