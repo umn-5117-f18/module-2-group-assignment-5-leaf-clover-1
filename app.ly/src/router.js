@@ -100,7 +100,8 @@ router.beforeEach(function(to, from, next) {
                     'Work Experience': {},
                     'Interests': {},
                   },
-                  'applications': {}
+                  'applications': {},
+                  'total_apps': 0
             });
 
             console.log("created new document and going to master-resume");
