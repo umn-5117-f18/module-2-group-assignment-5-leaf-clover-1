@@ -69,25 +69,6 @@ let router = new Router({
 router.beforeEach(function(to, from, next) {
   let currentUser = firebase.auth().currentUser
   let requiresAuth = to.matched.some(record=>record.meta.requiresAuth)
-
-
-  // if(!foundDoc){    
-
-  //   // doc.data() will be undefined in this case
-  //   console.log("No such document!");
-  //   db.collection('users').doc(uid).set({
-  //     'master_resume': {
-  //       'Publications': {},  
-  //       'Education': {},
-  //       'Skills': {},
-  //       'Work Experience': {},
-  //       'Interests': {},
-  //     },
-  //     'applications': {}
-  //   });
-  //   console.log("created new document");
-  //   next('/master-resume')
-  // }
   
 
   if (requiresAuth && !currentUser) {
