@@ -83,6 +83,9 @@ export default {
           mr = data.master_resume;
           total = data.total_apps;
 
+          console.log('params.id: ' + this.$route.params.id);
+          console.log('applications: ' + apps);
+
           // update the map corresponding map item
           apps[this.$route.params.id] = {
             title: this.title,
@@ -93,17 +96,18 @@ export default {
           // set db arrays (need to set all fields)
           docRef.set({ applications: apps, master_resume: mr, total_apps: total});
           console.log('updated database');
+
+          // redirect to applications page now that we've saved
+          // this needs to be inside then() because async db stuff
+          this.$router.push('/applications');
         } else {
           console.log('document not found');
         }
       });
-
-      // redirect to applications page now that we've saved
-      this.$router.push('/applications');
     },
     logout: function() {
         firebase.auth().signOut().then(()=> {
-        this.$router.replace('/')
+          this.$router.replace('/')
         })
     }
   }
