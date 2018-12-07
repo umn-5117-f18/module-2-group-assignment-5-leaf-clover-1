@@ -91,10 +91,6 @@ router.beforeEach(function(to, from, next) {
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
-            db.collection('users').doc(userId).set({
-                done: [],
-                incomplete: []
-            });
 
             db.collection('users').doc(userId).set({
                   'master_resume': {
