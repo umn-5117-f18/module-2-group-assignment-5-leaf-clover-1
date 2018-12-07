@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { db } from '@/main.js'
+
 export default {
     name: 'Card',
     props: {
@@ -46,7 +48,31 @@ export default {
     },
     methods: {
         deleteCard() {
-            console.log('about to delete card: ' + this.name);
+            var UID = 'user1';
+            var docRef = db.doc('users/' + UID);
+            var apps = [];
+            var mr = [];
+            var total = 0;
+
+            docRef.get().then((documentSnapshot) => {
+                if (documentSnapshot.exists) {
+                    // store current state of applications map
+                    var data = documentSnapshot.data();
+                    apps = data.applications;
+                    mr = data.master_resume;
+                    total = data.total_apps;
+
+                    console.log('deleting app: ', this.name);
+
+                    // delete property from JSON object
+                    delete apps[this.name];
+
+                    docRef.set({ applications: apps, master_resume: mr, total_apps: total })
+                    console.log('updated database');
+                } else {
+                    console.log('document not found');
+                }
+            });
         }
     }
 }
