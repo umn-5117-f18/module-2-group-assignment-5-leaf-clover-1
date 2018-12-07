@@ -10,7 +10,6 @@ import Registration from './views/Registration.vue'
 import AppPage from './views/AppPage.vue'
 import ResumeBuilder from './views/ResumeBuilder.vue'
 import NewResumeSection from './views/NewResumeSection'
-import AddResumeSection from './views/AddResumeSection'
 
 Vue.use(Router)
 
@@ -35,14 +34,6 @@ let router = new Router({
       path: '/master-resume/new-section/:section',
       name: 'new-resume-section',
       component: NewResumeSection,
-      meta: {
-        requiresAuth: true
-      },
-    },
-    {
-      path: '/master-resume/new-section/',
-      name: 'add-resume-section',
-      component: AddResumeSection,
       meta: {
         requiresAuth: true
       },

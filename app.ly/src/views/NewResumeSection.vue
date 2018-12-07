@@ -1,28 +1,36 @@
 <template>
   <div class="new-resume-section">
     <h2>New sub-section in {{ $route.params.section }}</h2>
-    <form action="/master-resume/new-section">
-      <input name="subsection-name" type="text" placeholder="Subsection name">
+    <form action="">
+      <input id="subsection-name" v-on:change="sectionInputCallback" type="text"
+          placeholder="Subsection name">
 
       <div class="sub-input" v-for="n in allInputs">
-        <input v-bind:name="nDetailKey(n)" class="key" type="text" placeholder="Detail name">
+        <input v-bind:id="nDetailKey(n)" v-on:change="detailInputCallback"
+            class="key" type="text" placeholder="Detail name">
         <p>:</p>
-        <input v-bind:name="nDetailValue(n)" class="value" type="text" placeholder="Detail text">
+        <input v-bind:id="nDetailValue(n)" v-on:change="detailInputCallback"
+               class="value" type="text" placeholder="Detail text">
       </div>
 
       <a class="button" v-on:click="addInput">+</a>
 
-      <input class="button is-primary" value="Save" type="submit">
+      <a class="button is-primary" v-on:click="saveToDb">Save</a>
     </form>
   </div>
 </template>
 
 <script>
+import firebase from 'firebase'
+import { db } from '@/main'
+
 export default {
   name: 'new-resume-section',
 
   data: function() {
     return {
+      subsectionName: '',
+      details: {},
       numInputs: 1,
     }
   },
@@ -38,6 +46,21 @@ export default {
       this.numInputs++;
     },
 
+    sectionInputCallback: function() {
+      this.subsectionName = document.getElementById('subsection-name').value;
+    },
+
+    detailInputCallback: function(n) {
+      let output = {};
+      console.log(this.numInputs);
+      for (let n in this.allInputs) {
+        let keyElem = document.getElementById(this.nDetailKey(n));
+        let valueElem = document.getElementById(this.nDetailValue(n));
+        output[keyElem.value] = valueElem.value;
+      }
+      this.details = output;
+    },
+
     nDetailKey: function(n) {
       return 'key' + n;
     },
@@ -45,6 +68,29 @@ export default {
     nDetailValue: function(n) {
       return 'value' + n;
     },
+
+    saveToDb: function() {
+      let docRef = db.doc('users/' + firebase.auth().currentUser.uid);
+      console.log(firebase.auth().currentUser.uid);
+      docRef.get().then((documentSnapshot) => {
+        // check and do something with the data here.
+        if (documentSnapshot.exists) {
+          // do something with the data
+          let newMasterResume = documentSnapshot.data().master_resume;
+          newMasterResume[this.$route.params.section][this.subsectionName] =
+            this.details;
+
+          docRef.set({
+            applications: documentSnapshot.data().applications,
+            master_resume: newMasterResume,
+          });
+
+          this.$router.push('/master-resume');
+        } else {
+          console.log('document not found');
+        }
+      });
+    }
   },
 }
 </script>
