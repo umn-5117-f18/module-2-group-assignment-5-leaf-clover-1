@@ -6,9 +6,6 @@
       <div class="column">
         <button class="button is-primary is-large" v-on:click='googleSignIn'>Sign in with Google</button>
       </div>
-      <div class="column">
-        <a class="button is-primary is-large">Register</a>
-      </div>
     </div>
   </div>
 </template>
