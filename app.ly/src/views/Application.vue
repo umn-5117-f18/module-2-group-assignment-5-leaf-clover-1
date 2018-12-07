@@ -63,9 +63,9 @@ export default {
 
                 // add a new map to the applications map
                 apps[new_name] = {
-                    title: 'new title',
-                    description: 'new description',
-                    company: 'some company'
+                    title: '',
+                    description: '',
+                    company: ''
                 };
 
                 docRef.set({ applications: apps, master_resume: mr, total_apps: total + 1 })

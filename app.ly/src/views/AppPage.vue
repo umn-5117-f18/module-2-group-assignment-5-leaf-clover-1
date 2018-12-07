@@ -5,21 +5,24 @@
     <div class="field">
       <label class="label">Job Title:</label>
       <div class="control">
-        <textarea class="textarea" v-model="title"></textarea>
+        <textarea class="textarea" v-model="title"
+          placeholder="Enter title here"></textarea>
       </div>
     </div>
 
     <div class="field">
       <label class="label">Job Description:</label>
       <div class="control">
-        <textarea class="textarea" v-model="descript"></textarea>
+        <textarea class="textarea" v-model="descript"
+          placeholder="Enter description here"></textarea>
       </div>
     </div>
 
     <div class="field">
       <label class="label">Company:</label>
       <div class="control">
-        <textarea class="textarea" v-model="company"></textarea>
+        <textarea class="textarea" v-model="company"
+          placeholder="Enter company here"></textarea>
       </div>
     </div>
     
@@ -37,9 +40,9 @@ export default {
   data () {
     return {
       name: String,
-      title: 'some title',
-      descript: 'some description',
-      company: 'some company',
+      title: String,
+      descript: String,
+      company: String,
       app: []
     };
   },
@@ -94,6 +97,9 @@ export default {
           console.log('document not found');
         }
       });
+
+      // redirect to applications page now that we've saved
+      this.$router.push('/applications');
     },
     logout: function() {
         firebase.auth().signOut().then(()=> {
