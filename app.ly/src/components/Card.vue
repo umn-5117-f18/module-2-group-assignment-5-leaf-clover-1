@@ -23,7 +23,9 @@
                     <router-link :to="appPath" class="card-footer-item">
                         Edit
                     </router-link>
-                    <a href="#" class="card-footer-item">Delete</a>
+                    <a v-on:click="deleteCard" class="card-footer-item">
+                        Delete
+                    </a>
                 </footer>
          </div>
     </div>
@@ -40,6 +42,11 @@ export default {
     computed:{
         appPath() {
             return '/app/' + this.name;
+        }
+    },
+    methods: {
+        deleteCard() {
+            console.log('about to delete card: ' + this.name);
         }
     }
 }
