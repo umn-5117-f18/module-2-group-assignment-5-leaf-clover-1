@@ -1,27 +1,46 @@
 <template>
   <div class="master-resume">
     <a id="edit-button" v-on:click="toggleEdit" class="spacious button is-primary">Edit Master Resume</a>
-    <div v-html="buildResumeTree"></div>
+    <div id="builtResume" v-html="buildResumeTree"></div>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
+import { db } from '@/main'
 import { testResume } from '@/testResume'
 import { resumeParser } from '@/resumeTree'
+
+// TODO: Remove this after Emily's PR #23 is merged and rebase
+const DEFAULT_USER_DATA = {
+  'master_resume': {
+    'Publications': {},
+    'Education': {},
+    'Skills': {},
+    'Work Experience': {},
+    'Interests': {},
+  },
+  'applications': {},
+};
 
 export default {
   name: 'MasterResume',
 
   data: function() {
     return {
+      resumeData: {},
       editing: false,
     }
   },
 
   computed: {
     buildResumeTree: function() {
-      let resumeList = resumeParser.resumeTreeList(testResume, 0, false, 5);
+      let resumeList = resumeParser.resumeTreeList(
+        this.resumeData,
+        0,
+        false,
+        5,
+      );
       let output = '';
       for (let i in resumeList) {
         let resumeDepth = resumeList[i][1];
@@ -40,36 +59,32 @@ export default {
           + '</li>';
       }
       return '<ul>' + output + '</ul>';
-    }
+    },
+  },
+
+  beforeCreate: function() {
+    // Build the resume tree for the current user, if it exists. If not,
+    // populate an empty resume.
+    let docRef = db.doc('users/' + firebase.auth().currentUser.uid);
+    console.log(firebase.auth().currentUser.uid);
+    docRef.get().then((documentSnapshot) => {
+      // check and do something with the data here.
+      if (documentSnapshot.exists) {
+        // do something with the data
+        var data = documentSnapshot.data();
+        this.resumeData = data.master_resume;
+      } else {
+        console.log('document not found, adding default user data');
+        docRef.set(DEFAULT_USER_DATA);
+      }
+    });
   },
 
   methods: {
     logout: function() {
       firebase.auth().signOut().then(()=> {
-      this.$router.replace('/')
+        this.$router.replace('/')
       })
-    },
-
-    resumeTree: function(obj, level) {
-      for (let x in obj) {
-        if (typeof(obj[x])== 'object' && obj[x] !== null) {
-          return this.resumeTree(obj[x], level + 1);
-        } else {
-          return this.makeElement(level, obj[x], level);
-        }
-      }
-    },
-
-    eachRecursive: function(obj, level, result) {
-      if (typeof obj == 'object' && obj !== null) {
-        let tmpResult = '';
-        for (var k in obj) {
-          tmpResult += this.makeElement(level, k) + this.eachRecursive(obj[k], level + 1, result);
-        }
-        return tmpResult;
-      } else {
-        return this.makeElement(level, obj);
-      }
     },
 
     makeElement: function(level, text) {
@@ -84,6 +99,10 @@ export default {
         document.getElementById('edit-button').innerHTML = 'Stop Editing';
       }
     },
+
+    updateResumeHtml: function(html) {
+      document.getElementById('builtResume').innerHTML = html;
+    },
   },
 };
 </script>
@@ -92,6 +111,12 @@ export default {
 @media only screen and (max-width: 1000px) {
   .master-resume {
     width: 90%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .master-resume {
+    width: 60%;
   }
 }
 
