@@ -1,6 +1,14 @@
 <template>
   <div class="resume-builder">
-    <div v-html="loadedResume"></div>
+    <ul v-for="resumeItem in resumeList">
+      <li v-bind:class="liClasses(resumeItem[1])">
+        <input v-bind:checked="isChecked(resumeItem[0])" type="checkbox"
+        v-bind:name="resumeItem[0]" v-on:click="updateNotIncluded"/>
+        <label v-bind:for="resumeItem[0]">
+          {{ resumeItem[0] }}
+        </label>
+      </li>
+    </ul>
     <router-link class="button is-primary" :to="parentApplicationUrl">
       Save
     </router-link>
@@ -17,21 +25,14 @@ export default {
 
   data: function() {
     return {
-      resumeData: {},
+      exclude: [],
+      masterResumeData: {},
     }
   },
 
   computed: {
-    loadedResume: function() {
-      let resumeList = resumeParser.resumeTreeList(this.resumeData, 0, false, 1);
-      let output = '';
-      for (let i in resumeList) {
-        output += '<li class="resume-checkbox resume-checkbox-' +
-          resumeList[i][1] + '"><input checked="true" name="' + i +
-          '"type="checkbox"/><label for="' +
-          i + '">' + resumeList[i][0] + '</label></li>';
-      }
-      return '<ul>' + output + '</ul>';
+    resumeList: function() {
+      return resumeParser.resumeTreeList(this.masterResumeData, 0, false, 1)
     },
 
     parentApplicationUrl: function() {
@@ -47,13 +48,55 @@ export default {
     docRef.get().then((documentSnapshot) => {
       // check and do something with the data here.
       if (documentSnapshot.exists) {
-        // do something with the data
+        // Add the full master resume if there hasn't been one defined yet
         var data = documentSnapshot.data();
-        this.resumeData = data.master_resume;
+        let exclude = data.applications[this.$route.params.id].exclude;
+        this.exclude = exclude ? exclude : [];
+        this.masterResumeData = data.master_resume;
       } else {
         console.log('document not found');
       }
     });
+  },
+
+  methods: {
+    liClasses: function(level) {
+      return 'resume-checkbox resume-checkbox-' + level;
+    },
+
+    isChecked: function(name) {
+      return this.exclude.indexOf(name) < 0 ? 'checked' : '';
+    },
+
+    updateNotIncluded: function(event) {
+      let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 1);
+      let element = event.target.name;
+      let index = this.exclude.indexOf(element);
+      if (index < 0) {
+        this.exclude.push(element);
+      } else {
+        this.exclude.splice(index, 1);
+      }
+
+      // Update the database
+      let docRef = db.doc('users/' + firebase.auth().currentUser.uid);
+      docRef.get().then((documentSnapshot) => {
+        // check and do something with the data here.
+        if (documentSnapshot.exists) {
+          // Add the full master resume if there hasn't been one defined yet
+          var data = documentSnapshot.data();
+          let applications = data.applications;
+          let thisApplication = applications[this.$route.params.id];
+          thisApplication.exclude = this.exclude;
+          applications[this.$route.params.id] = thisApplication;
+          docRef.update({
+            applications: applications,
+          });
+        } else {
+          console.log('document not found');
+        }
+      });
+    },
   },
 }
 </script>

@@ -87,10 +87,10 @@ let router = new Router({
 router.beforeEach(function(to, from, next) {
   let currentUser = firebase.auth().currentUser
   let requiresAuth = to.matched.some(record=>record.meta.requiresAuth)
-  
+
 
   if (requiresAuth && !currentUser) {
-    
+
     next('/')
   } else if (!requiresAuth && currentUser) {
 
@@ -101,38 +101,38 @@ router.beforeEach(function(to, from, next) {
       var docRef = db.doc('users/' + userId);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log('Doc already exists!');
-            console.log("Document data:", doc.data());
-            console.log("going to applications");
-            next('/applications')
+          console.log('Doc already exists!');
+          console.log("Document data:", doc.data());
+          console.log("going to applications");
+          next('/applications')
 
         } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
 
-            db.collection('users').doc(userId).set({
-                  'master_resume': {
-                    'Publications': {},  
-                    'Education': {},
-                    'Skills': {},
-                    'Work Experience': {},
-                    'Interests': {},
-                  },
-                  'applications': {},
-                  'total_apps': 0
-            });
+          db.collection('users').doc(userId).set({
+            'master_resume': {
+              'Publications': {},  
+              'Education': {},
+              'Skills': {},
+              'Work Experience': {},
+              'Interests': {},
+            },
+            'applications': {},
+            'total_apps': 0
+          });
 
-            console.log("created new document and going to master-resume");
+          console.log("created new document and going to master-resume");
 
-            next('/master-resume')
+          next('/master-resume')
 
         }
       }).catch(function(error) {
-          console.log("Error getting document:", error);
+        console.log("Error getting document:", error);
       });
 
     }
-    
+
   } else {
     next()  //Must always reach this case eventually or you get a stack overflow
   }
