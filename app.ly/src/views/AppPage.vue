@@ -26,9 +26,13 @@
       </div>
     </div>
 
-    <button class="button is-primary" v-on:click="save">Save</button>
-    <button class="button" v-on:click="deleteApp">Delete</button>
+    <div>
+      <router-link class="button" :to="resumeBuilderUrl">
+        Resume Builder
+      </router-link>
+    </div>
 
+    <button class="button" v-on:click="deleteApp">Delete</button>
     <button class="button is-primary" v-on:click="save">Save</button>
   </div>
 </template>

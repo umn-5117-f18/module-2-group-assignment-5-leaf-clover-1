@@ -1,24 +1,29 @@
 <template>
   <div class="resume-builder">
     <div v-html="loadedResume"></div>
-    <a class="button is-primary">
-      <router-link :to="parentApplicationUrl">
-        Save
-      </router-link>
-    </a>
+    <router-link class="button is-primary" :to="parentApplicationUrl">
+      Save
+    </router-link>
   </div>
 </template>
 
 <script>
-import { testResume } from '@/testResume'
+import firebase from 'firebase'
+import { db } from '@/main'
 import { resumeParser } from '@/resumeTree'
 
 export default {
   name: 'resume-builder',
 
+  data: function() {
+    return {
+      resumeData: {},
+    }
+  },
+
   computed: {
     loadedResume: function() {
-      let resumeList = resumeParser.resumeTreeList(testResume, 0, false, 1);
+      let resumeList = resumeParser.resumeTreeList(this.resumeData, 0, false, 1);
       let output = '';
       for (let i in resumeList) {
         output += '<li class="resume-checkbox resume-checkbox-' +
@@ -32,6 +37,23 @@ export default {
     parentApplicationUrl: function() {
       return '/app/' + this.$route.params.id;
     },
+  },
+
+  beforeCreate: function() {
+    // Build the resume tree for the current user, if it exists. If not,
+    // populate an empty resume.
+    let docRef = db.doc('users/' + firebase.auth().currentUser.uid);
+    console.log(firebase.auth().currentUser.uid);
+    docRef.get().then((documentSnapshot) => {
+      // check and do something with the data here.
+      if (documentSnapshot.exists) {
+        // do something with the data
+        var data = documentSnapshot.data();
+        this.resumeData = data.master_resume;
+      } else {
+        console.log('document not found');
+      }
+    });
   },
 }
 </script>

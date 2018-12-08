@@ -1,6 +1,7 @@
 <template>
   <div class="master-resume">
-    <a id="edit-button" v-on:click="toggleEdit" class="spacious button is-primary">Edit Master Resume</a>
+    <a id="edit-button" v-on:click="toggleEdit"
+      class="spacious button is-primary">Edit Master Resume</a>
     <div id="builtResume" v-html="buildResumeTree"></div>
   </div>
 </template>
@@ -8,7 +9,6 @@
 <script>
 import firebase from 'firebase'
 import { db } from '@/main'
-import { testResume } from '@/testResume'
 import { resumeParser } from '@/resumeTree'
 
 // TODO: Remove this after Emily's PR #23 is merged and rebase
