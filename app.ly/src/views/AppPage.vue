@@ -27,6 +27,7 @@
     </div>
     
     <button class="button is-primary" v-on:click="save">Save</button>
+    <button class="button" v-on:click="deleteApp">Delete</button>
 
   </div>
 </template>
@@ -73,7 +74,7 @@ export default {
       }
   },
   methods: {
-    save() {      
+    save() {  
       let currentUser = firebase.auth().currentUser;
       if (currentUser) {
         var UID = currentUser.uid;
@@ -90,8 +91,7 @@ export default {
             mr = data.master_resume;
             total = data.total_apps;
 
-            console.log('params.id: ' + this.$route.params.id);
-            console.log('applications: ' + apps);
+            console.log('updating app: ', this.$route.params.id);
 
             // update the map corresponding map item
             apps[this.$route.params.id] = {
@@ -119,7 +119,42 @@ export default {
         firebase.auth().signOut().then(()=> {
           this.$router.replace('/')
         })
-    }
+    }, // END logout()
+    deleteApp() {
+      let currentUser = firebase.auth().currentUser
+      if (currentUser) {
+          var UID = currentUser.uid;
+          var docRef = db.doc('users/' + UID);
+          var apps = [];
+          var mr = [];
+          var total = 0;
+
+          docRef.get().then((documentSnapshot) => {
+              if (documentSnapshot.exists) {
+                  // store current state of applications map
+                  var data = documentSnapshot.data();
+                  apps = data.applications;
+                  mr = data.master_resume;
+                  total = data.total_apps;
+
+                  console.log('deleting app: ', this.$route.params.id);
+
+                  // delete property from JSON object
+                  delete apps[this.$route.params.id];
+
+                  docRef.set({ applications: apps, master_resume: mr, total_apps: total })
+                  console.log('updated database');
+
+                  // redirect to applications view
+                  this.$router.push('/applications');
+              } else {
+                  console.log('document not found');
+              }
+          });
+      } else {
+          console.log('current user is null');
+      }
+    } // END deleteApp()
   }
 }
 </script>

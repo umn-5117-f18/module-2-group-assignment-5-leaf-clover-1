@@ -29,7 +29,7 @@ export default {
   firestore() {
       let currentUser = firebase.auth().currentUser;
       if (currentUser) {
-            var UID = currentUser.uid;
+          var UID = currentUser.uid;
       } else {
           console.log('current user is null');
           return;
@@ -86,8 +86,6 @@ export default {
             });
         } else {
             console.log('current user is null');
-            // redirect to home page?
-            //this.$router.push('/');
         }
     }
   }
