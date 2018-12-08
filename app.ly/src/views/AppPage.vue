@@ -49,62 +49,72 @@ export default {
   beforeCreate() {
     // grab the name from the route param
     this.name = this.$route.params.id;
-    var UID = 'user1';
-    var docRef = db.doc('users/' + UID);
+    let currentUser = firebase.auth().currentUser
+    if (currentUser) {
+        var UID = currentUser.uid;
+        var docRef = db.doc('users/' + UID);
 
-    docRef.get().then((documentSnapshot) => {
-      // check and do something with the data here.
-      if (documentSnapshot.exists) {
-        // store the data locally
-        var data = documentSnapshot.data();
-        this.app = data.applications[this.$route.params.id];
-        
-        this.title = this.app.title;
-        this.descript = this.app.description;
-        this.company = this.app.company;
+        docRef.get().then((documentSnapshot) => {
+          // check and do something with the data here.
+          if (documentSnapshot.exists) {
+            // store the data locally
+            var data = documentSnapshot.data();
+            this.app = data.applications[this.$route.params.id];
+            
+            this.title = this.app.title;
+            this.descript = this.app.description;
+            this.company = this.app.company;
+          } else {
+            console.log('document not found');
+          }
+        });
       } else {
-        console.log('document not found');
+        console.log('current user is null');
       }
-    });
   },
   methods: {
     save() {      
-      var UID = 'user1';
-      var docRef = db.doc('users/' + UID);
-      var apps = [];
-      var mr = [];
-      var total = 0;
+      let currentUser = firebase.auth().currentUser;
+      if (currentUser) {
+        var UID = currentUser.uid;
+        var docRef = db.doc('users/' + UID);
+        var apps = [];
+        var mr = [];
+        var total = 0;
 
-      docRef.get().then((documentSnapshot) => {
-        if (documentSnapshot.exists) {
-          // store current state of applications map
-          var data = documentSnapshot.data();
-          apps = data.applications;
-          mr = data.master_resume;
-          total = data.total_apps;
+        docRef.get().then((documentSnapshot) => {
+          if (documentSnapshot.exists) {
+            // store current state of applications map
+            var data = documentSnapshot.data();
+            apps = data.applications;
+            mr = data.master_resume;
+            total = data.total_apps;
 
-          console.log('params.id: ' + this.$route.params.id);
-          console.log('applications: ' + apps);
+            console.log('params.id: ' + this.$route.params.id);
+            console.log('applications: ' + apps);
 
-          // update the map corresponding map item
-          apps[this.$route.params.id] = {
-            title: this.title,
-            description: this.descript,
-            company: this.company
-          };
+            // update the map corresponding map item
+            apps[this.$route.params.id] = {
+              title: this.title,
+              description: this.descript,
+              company: this.company
+            };
 
-          // set db arrays (need to set all fields)
-          docRef.set({ applications: apps, master_resume: mr, total_apps: total});
-          console.log('updated database');
+            // set db arrays (need to set all fields)
+            docRef.set({ applications: apps, master_resume: mr, total_apps: total});
+            console.log('updated database');
 
-          // redirect to applications page now that we've saved
-          // this needs to be inside then() because async db stuff
-          this.$router.push('/applications');
-        } else {
-          console.log('document not found');
-        }
-      });
-    },
+            // redirect to applications page now that we've saved
+            // this needs to be inside then() because async db stuff
+            this.$router.push('/applications');
+          } else {
+            console.log('document not found');
+          }
+        });
+      } else {
+          console.log('current user is null');
+      }
+    }, // END save()
     logout: function() {
         firebase.auth().signOut().then(()=> {
           this.$router.replace('/')
