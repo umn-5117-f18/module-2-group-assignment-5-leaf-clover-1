@@ -9,14 +9,18 @@
         </label>
       </li>
     </ul>
+
     <router-link class="button is-primary" :to="parentApplicationUrl">
       Save
     </router-link>
+
+    <button class="button" v-on:click="buildPdf">Save PDF</button>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
+import jsPDF from 'jspdf'
 import { db } from '@/main'
 import { resumeParser } from '@/resumeTree'
 
@@ -27,6 +31,7 @@ export default {
     return {
       exclude: [],
       masterResumeData: {},
+      pdfLineSpacing: 10,
     }
   },
 
@@ -96,6 +101,23 @@ export default {
           console.log('document not found');
         }
       });
+    },
+
+    buildPdf: function() {
+      let doc = new jsPDF();
+      console.log(doc);
+      let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 5);
+      let line = this.pdfLineSpacing;
+      for (let i in resumeList) {
+        let resumeDepth = resumeList[i][1];
+        let resumeItem = resumeList[i][0];
+        if (this.exclude.indexOf(resumeItem) < 0) {
+          console.log(resumeItem);
+          doc.text(resumeItem, this.pdfLineSpacing * (resumeDepth + 1), line);
+          line += this.pdfLineSpacing;
+        }
+      }
+      doc.save('resume-' + this.$route.params.id + '.pdf');
     },
   },
 }

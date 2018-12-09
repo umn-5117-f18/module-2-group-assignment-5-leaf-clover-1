@@ -66,8 +66,7 @@ Progression through the Desktop version of the app
 **Document integrations with 3rd Party code or services here.
 Please do not document required libraries (e.g., Vue, Vuefire, Firebase).**
 
-* Library or service name: description of use
-* ...
+- jsPDF: Generating PDFs of the custom resumes for each application
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
