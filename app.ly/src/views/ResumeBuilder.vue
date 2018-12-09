@@ -31,7 +31,10 @@ export default {
     return {
       exclude: [],
       masterResumeData: {},
-      pdfLineSpacing: 10,
+      pdfConfig: {
+        lineSpacing: 8,
+        minFontSize: 10,
+      },
     }
   },
 
@@ -107,14 +110,19 @@ export default {
       let doc = new jsPDF();
       console.log(doc);
       let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 5);
-      let line = this.pdfLineSpacing;
+      let line = this.pdfConfig.lineSpacing;
       for (let i in resumeList) {
         let resumeDepth = resumeList[i][1];
         let resumeItem = resumeList[i][0];
         if (this.exclude.indexOf(resumeItem) < 0) {
-          console.log(resumeItem);
-          doc.text(resumeItem, this.pdfLineSpacing * (resumeDepth + 1), line);
-          line += this.pdfLineSpacing;
+          doc.setFontSize(this.pdfConfig.lineSpacing + 2 * (5 - resumeDepth));
+          if (resumeDepth < 1) {
+            doc.setFontType('bold');
+          } else {
+            doc.setFontType('normal');
+          }
+          doc.text(resumeItem, this.pdfConfig.lineSpacing * (resumeDepth + 1), line);
+          line += this.pdfConfig.lineSpacing;
         }
       }
       doc.save('resume-' + this.$route.params.id + '.pdf');
