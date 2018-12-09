@@ -27,8 +27,15 @@ export default {
       }
   },
   firestore() {
+      let currentUser = firebase.auth().currentUser;
+      if (currentUser) {
+          var UID = currentUser.uid;
+      } else {
+          console.log('current user is null');
+          return;
+      }
       return {
-        user: db.doc('users/user1')
+        user: db.doc('users/' + UID)
       }
   },
   components: {
@@ -41,42 +48,45 @@ export default {
         })
     },
     addCard() {
-        console.log('in addCard');
+        let currentUser = firebase.auth().currentUser
+        if (currentUser) {
+            var UID = currentUser.uid;
+            var docRef = db.doc('users/' + UID);
+            var apps = [];
+            var mr = [];
+            var total = 0;
 
-        var UID = 'user1';
-        var docRef = db.doc('users/' + UID);
-        var apps = [];
-        var mr = [];
-        var total = 0;
+            docRef.get().then((documentSnapshot) => {
+                if (documentSnapshot.exists) {
+                    // store current state of applications map
+                    var data = documentSnapshot.data();
+                    apps = data.applications;
+                    mr = data.master_resume;
+                    total = data.total_apps;
 
-        docRef.get().then((documentSnapshot) => {
-            if (documentSnapshot.exists) {
-                // store current state of applications map
-                var data = documentSnapshot.data();
-                apps = data.applications;
-                mr = data.master_resume;
-                total = data.total_apps;
+                    var new_name = 'app' + (total + 1);
 
-                var new_name = 'app' + (total + 1);
+                    console.log('adding new app: ', new_name);
 
-                console.log('adding new app: ', new_name);
+                    // add a new map to the applications map
+                    apps[new_name] = {
+                        title: '',
+                        description: '',
+                        company: ''
+                    };
 
-                // add a new map to the applications map
-                apps[new_name] = {
-                    title: '',
-                    description: '',
-                    company: ''
-                };
+                    docRef.set({ applications: apps, master_resume: mr, total_apps: total + 1 })
+                    console.log('updated database');
 
-                docRef.set({ applications: apps, master_resume: mr, total_apps: total + 1 })
-                console.log('updated database');
-
-                // redirect to editing page
-                this.$router.push('/app/' + new_name);
-            } else {
-                console.log('document not found');
-            }
-        });
+                    // redirect to editing page
+                    this.$router.push('/app/' + new_name);
+                } else {
+                    console.log('document not found');
+                }
+            });
+        } else {
+            console.log('current user is null');
+        }
     }
   }
 }
