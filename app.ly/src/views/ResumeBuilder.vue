@@ -111,10 +111,24 @@ export default {
       console.log(doc);
       let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 5);
       let line = this.pdfConfig.lineSpacing;
+      let excludeParent = false;
+      let excludeChild = false;
+      let previousDepth = 0;
       for (let i in resumeList) {
         let resumeDepth = resumeList[i][1];
         let resumeItem = resumeList[i][0];
-        if (this.exclude.indexOf(resumeItem) < 0) {
+
+        // Exclude all children of de-selected parents
+        if (previousDepth >= resumeDepth && resumeDepth == 0) {
+          excludeParent = this.exclude.indexOf(resumeItem) >= 0;
+        }
+
+        // Exclude de-selected children
+        if (!excludeParent && resumeDepth < 2) {
+          excludeChild = this.exclude.indexOf(resumeItem) >= 0;
+        }
+
+        if (!excludeParent && !excludeChild) {
           doc.setFontSize(this.pdfConfig.lineSpacing + 2 * (5 - resumeDepth));
           if (resumeDepth < 1) {
             doc.setFontType('bold');
@@ -124,6 +138,7 @@ export default {
           doc.text(resumeItem, this.pdfConfig.lineSpacing * (resumeDepth + 1), line);
           line += this.pdfConfig.lineSpacing;
         }
+        previousDepth = resumeDepth;
       }
       doc.save('resume-' + this.$route.params.id + '.pdf');
     },
