@@ -5,9 +5,11 @@ import { db } from './main.js'
 
 import Home from './views/Home.vue'
 import MasterResume from './views/MasterResume.vue'
-import Applications from './views/Application.vue'
+import ApplicationList from './views/ApplicationList.vue'
 import Registration from './views/Registration.vue'
 import AppPage from './views/AppPage.vue'
+import ResumeBuilder from './views/ResumeBuilder.vue'
+import NewResumeSection from './views/NewResumeSection'
 
 Vue.use(Router)
 
@@ -29,9 +31,17 @@ let router = new Router({
       }
     },
     {
+      path: '/master-resume/new-section/:section',
+      name: 'new-resume-section',
+      component: NewResumeSection,
+      meta: {
+        requiresAuth: true
+      },
+    },
+    {
       path: '/applications',
       name: 'applications',
-      component: Applications,
+      component: ApplicationList,
       meta: {
         requiresAuth: true
       }
@@ -43,6 +53,14 @@ let router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/app/:id/resume-builder',
+      name: 'resume-builder',
+      component: ResumeBuilder,
+      meta: {
+        requiresAuth: true
+      },
     },
     {
       path: '/about',
@@ -69,10 +87,10 @@ let router = new Router({
 router.beforeEach(function(to, from, next) {
   let currentUser = firebase.auth().currentUser
   let requiresAuth = to.matched.some(record=>record.meta.requiresAuth)
-  
+
 
   if (requiresAuth && !currentUser) {
-    
+
     next('/')
   } else if (!requiresAuth && currentUser) {
 
@@ -83,38 +101,38 @@ router.beforeEach(function(to, from, next) {
       var docRef = db.doc('users/' + userId);
       docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log('Doc already exists!');
-            console.log("Document data:", doc.data());
-            console.log("going to applications");
-            next('/applications')
+          console.log('Doc already exists!');
+          console.log("Document data:", doc.data());
+          console.log("going to applications");
+          next('/applications')
 
         } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
 
-            db.collection('users').doc(userId).set({
-                  'master_resume': {
-                    'Publications': {},  
-                    'Education': {},
-                    'Skills': {},
-                    'Work Experience': {},
-                    'Interests': {},
-                  },
-                  'applications': {},
-                  'total_apps': 0
-            });
+          db.collection('users').doc(userId).set({
+            'master_resume': {
+              'Publications': {},  
+              'Education': {},
+              'Skills': {},
+              'Work Experience': {},
+              'Interests': {},
+            },
+            'applications': {},
+            'total_apps': 0
+          });
 
-            console.log("created new document and going to master-resume");
+          console.log("created new document and going to master-resume");
 
-            next('/master-resume')
+          next('/master-resume')
 
         }
       }).catch(function(error) {
-          console.log("Error getting document:", error);
+        console.log("Error getting document:", error);
       });
 
     }
-    
+
   } else {
     next()  //Must always reach this case eventually or you get a stack overflow
   }

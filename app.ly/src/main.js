@@ -16,6 +16,7 @@ Vue.use(VueFire);
 Vue.config.productionTip = false;
 
 export const db = firebase.firestore();
+db.settings({timestampsInSnapshots: true});
 
 let app;
 
