@@ -79,11 +79,38 @@ export default {
     updateNotIncluded: function(event) {
       let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 1);
       let element = event.target.name;
+
+      // Find the element in the resumeList
+      let resumeListIndex = 0;
+      for (let x in resumeList) {
+        if (resumeList[x][0] === element) {
+          resumeListIndex = x;
+        }
+      }
+
+      // Add all the children to exclude/include
+      let children = [];
+      let i = resumeListIndex;
+      let sameDepth = false;
+      while (!sameDepth && i < resumeList.length) {
+        children.push(resumeList[i][0]);
+        i++;
+        if (resumeList[i]) {
+          sameDepth = resumeList[i][1] <= resumeList[resumeListIndex][1];
+        } else {
+          sameDepth = true;
+        }
+      }
+
       let index = this.exclude.indexOf(element);
       if (index < 0) {
-        this.exclude.push(element);
+        for (let i in children) {
+          this.exclude.push(children[i]);
+        }
       } else {
-        this.exclude.splice(index, 1);
+        for (let i in children) {
+          this.exclude.splice(this.exclude.indexOf(children[i]), 1);
+        }
       }
 
       // Update the database
