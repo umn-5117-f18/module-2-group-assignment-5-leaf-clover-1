@@ -1,7 +1,6 @@
 <template>
   <div>
 
-    <button a class="button" v-on:click="logout">Sign Out</button>
     <div class="field">
       <label class="label">Job Title:</label>
       <div class="control">
@@ -38,7 +37,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 import { db } from '@/main.js'
 
 export default {
