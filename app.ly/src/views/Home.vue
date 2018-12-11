@@ -15,6 +15,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import firebase from 'firebase'
 import {provider} from '../firebaseConfig'
+
 export default {
   name: 'home',
   components: {},
@@ -23,9 +24,11 @@ export default {
         firebase.auth().signInWithRedirect(provider).then(
           (result=> {
             console.log("signed in with google")
+            
           })
           .catch(err=>alert(err.message))
         )
+        
       }
     }
 }
