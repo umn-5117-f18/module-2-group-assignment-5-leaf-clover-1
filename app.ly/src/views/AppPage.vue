@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+  <div class="field-container">
     <div class="field">
       <label class="label">Job Title:</label>
       <div class="control">
@@ -26,13 +25,13 @@
     </div>
 
     <div>
-      <router-link class="button" :to="resumeBuilderUrl">
+      <router-link class="button is-primary is-large" :to="resumeBuilderUrl">
         Resume Builder
       </router-link>
     </div>
 
     <button class="button" v-on:click="deleteApp">Delete</button>
-    <button class="button is-primary" v-on:click="save">Save</button>
+    <button class="button" v-on:click="save">Save</button>
   </div>
 </template>
 
@@ -87,7 +86,7 @@ export default {
   },
 
   methods: {
-    save() {  
+    save() {
       let currentUser = firebase.auth().currentUser;
       if (currentUser) {
         var UID = currentUser.uid;
@@ -171,3 +170,26 @@ export default {
   }
 }
 </script>
+
+<style>
+@media only screen and (max-width: 1000px) {
+  .field-container {
+    width: 90%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .field-container {
+    width: 60%;
+  }
+}
+
+.field-container {
+  display: inline-block;
+  margin: 2% auto;
+}
+
+.field-container .button {
+  margin: 2%;
+}
+</style>
