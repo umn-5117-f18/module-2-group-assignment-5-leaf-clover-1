@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <!-- </TodoList>     -->
+    <TodoList v-bind:app_name="getName"/>
 
     <div>
       <router-link class="button" :to="resumeBuilderUrl">
@@ -43,14 +43,15 @@
 import firebase from 'firebase'
 import { db } from '@/main.js'
 
+import TodoList from '@/components/ToDoList'
+
 export default {
   name: 'AppPage',
   components: {
-    // TodoList
+    TodoList
   },
   data () {
     return {
-      name: String,
       title: String,
       descript: String,
       company: String,
@@ -62,12 +63,13 @@ export default {
     resumeBuilderUrl: function() {
       return '/app/' + this.$route.params.id + '/resume-builder';
     },
+    getName() {
+      return this.$route.params.id;
+    }
   },
 
   beforeCreate() {
-    // grab the name from the route param
-    this.name = this.$route.params.id;
-    let currentUser = firebase.auth().currentUser
+    let currentUser = firebase.auth().currentUser;
     if (currentUser) {
         var UID = currentUser.uid;
         var docRef = db.doc('users/' + UID);

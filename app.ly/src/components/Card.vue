@@ -38,13 +38,13 @@ import { db } from '@/main.js'
 export default {
   name: 'Card',
   props: {
-    name: String,
+    app_name: String,
     title: String,
     descript: String
   },
   computed:{
     appPath() {
-      return '/app/' + this.name;
+      return '/app/' + this.app_name;
     }
   },
   methods: {

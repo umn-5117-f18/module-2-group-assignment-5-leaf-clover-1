@@ -5,7 +5,7 @@
         <div class="columns is-centered">
             <!-- display applications as Card components -->
             <article v-for="(val, idx) in user.applications" :key="idx">
-                <Card v-bind:name='idx' v-bind:title='val.title' v-bind:descript='val.description'/>
+                <Card v-bind:app_name='idx' v-bind:title='val.title' v-bind:descript='val.description'/>
             </article>
         </div>
 
