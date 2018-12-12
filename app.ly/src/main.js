@@ -31,3 +31,15 @@ firebase.auth().onAuthStateChanged(user => {
     })
   }
 })
+
+export const DEFAULT_USER_DATA = {
+  'master_resume': {
+    'Publications': {},
+    'Education': {},
+    'Skills': {},
+    'Work Experience': {},
+    'Interests': {},
+  },
+  'applications': {},
+  'total_apps': 0
+};
