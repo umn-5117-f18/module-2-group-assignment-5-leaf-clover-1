@@ -1,13 +1,12 @@
 <template>
     <div class="application">
-        <button a class="button is-primary" v-on:click="addCard">Add</button>
         <div class="columns is-centered">
             <!-- display applications as Card components -->
             <article v-for="(val, idx) in user.applications" :key="idx">
                 <Card v-bind:app_name='idx' v-bind:title='val.title' v-bind:descript='val.description'/>
             </article>
         </div>
-
+        <button a class="button is-primary is-large" v-on:click="addCard">Add</button>
     </div>
 </template>
 
@@ -90,3 +89,23 @@ export default {
   }
 }
 </script>
+
+<style>
+@media only screen and (max-width: 1000px) {
+  .application {
+    width: 90%;
+    margin: 5%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .application {
+    width: 60%;
+    margin: 2%;
+  }
+}
+
+.application {
+  display: inline-block;
+}
+</style>

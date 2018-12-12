@@ -6,7 +6,7 @@
         |
         <router-link  to="/applications">Applications</router-link>
 
-        <button a class="button" v-on:click="logout" style="float: right;">Sign Out</button>
+        <a v-on:click="logout" style="float: right;">Sign Out</a>
       </div>
     </header>
     <router-view/>
@@ -33,7 +33,7 @@ export default {
   methods: {
     logout: function() {
       this.isHidden = true;
-      firebase.auth().signOut().then(()=> {   
+      firebase.auth().signOut().then(()=> {
       this.$router.replace('/')
       })
     }

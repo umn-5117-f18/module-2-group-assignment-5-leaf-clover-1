@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>app.ly</h1>
-    <h2>Organize your job applications - get your dream job</h2>
+    <h2>Organize your job applications<br />Get your dream job</h2>
     <br>
     <div class="columns">
       <div class="column">
@@ -25,11 +25,11 @@ export default {
         firebase.auth().signInWithRedirect(provider).then(
           (result=> {
             console.log("signed in with google")
-            
+
           })
           .catch(err=>alert(err.message))
         )
-        
+
       }
     }
 }

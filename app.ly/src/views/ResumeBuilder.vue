@@ -183,6 +183,11 @@ export default {
 .resume-builder {
   display: inline-block;
   text-align: left;
+  margin-top: 2%;
+}
+
+.resume-builder .button {
+  margin: 2%;
 }
 
 .resume-checkbox-0 {
