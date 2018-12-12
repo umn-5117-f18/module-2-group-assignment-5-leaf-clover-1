@@ -1,7 +1,6 @@
 <template>
   <div>
 
-    <button a class="button" v-on:click="logout">Sign Out</button>
     <div class="field">
       <label class="label">Job Title:</label>
       <div class="control">
@@ -38,7 +37,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 import { db } from '@/main.js'
 
 export default {
@@ -88,6 +86,7 @@ export default {
   },
 
   methods: {
+<<<<<<< HEAD
     save() {  
       let currentUser = firebase.auth().currentUser;
       if (currentUser) {
@@ -169,6 +168,45 @@ export default {
           console.log('current user is null');
       }
     } // END deleteApp()
+=======
+    save() {      
+      var UID = 'user1';
+      var docRef = db.doc('users/' + UID);
+      var apps = [];
+      var mr = [];
+      var total = 0;
+
+      docRef.get().then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          // store current state of applications map
+          var data = documentSnapshot.data();
+          apps = data.applications;
+          mr = data.master_resume;
+          total = data.total_apps;
+
+          console.log('params.id: ' + this.$route.params.id);
+          console.log('applications: ' + apps);
+
+          // update the map corresponding map item
+          apps[this.$route.params.id] = {
+            title: this.title,
+            description: this.descript,
+            company: this.company
+          };
+
+          // set db arrays (need to set all fields)
+          docRef.set({ applications: apps, master_resume: mr, total_apps: total});
+          console.log('updated database');
+
+          // redirect to applications page now that we've saved
+          // this needs to be inside then() because async db stuff
+          this.$router.push('/applications');
+        } else {
+          console.log('document not found');
+        }
+      });
+    }
+>>>>>>> Moved Sign out button to App.vue
   }
 }
 </script>

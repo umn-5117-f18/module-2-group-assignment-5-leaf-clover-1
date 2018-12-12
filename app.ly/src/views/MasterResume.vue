@@ -1,12 +1,15 @@
 <template>
   <div class="master-resume">
+
     <a id="edit-button" v-on:click="toggleEdit"
       class="spacious button is-primary">Edit Master Resume</a>
     <div id="builtResume" v-html="buildResumeTree"></div>
+
   </div>
 </template>
 
 <script>
+
 import firebase from 'firebase'
 import { db } from '@/main'
 import { resumeParser } from '@/resumeTree'
@@ -111,6 +114,7 @@ export default {
 @media only screen and (max-width: 1000px) {
   .master-resume {
     width: 90%;
+
   }
 }
 
