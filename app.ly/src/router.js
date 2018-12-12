@@ -6,7 +6,6 @@ import { db, DEFAULT_USER_DATA } from './main.js'
 import Home from './views/Home.vue'
 import MasterResume from './views/MasterResume.vue'
 import ApplicationList from './views/ApplicationList.vue'
-import Registration from './views/Registration.vue'
 import AppPage from './views/AppPage.vue'
 import ResumeBuilder from './views/ResumeBuilder.vue'
 import NewResumeSection from './views/NewResumeSection'
@@ -42,14 +41,6 @@ let router = new Router({
       path: '/applications',
       name: 'applications',
       component: ApplicationList,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/registration',
-      name: 'registration',
-      component: Registration,
       meta: {
         requiresAuth: true
       }
