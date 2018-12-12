@@ -114,7 +114,7 @@ export default {
     },
 
     addUserInfo: function(name, email, phone){
-      
+
       console.log("Adding name");
       //Need to add to database 
       let currentUser = firebase.auth().currentUser;

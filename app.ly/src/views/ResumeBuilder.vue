@@ -31,6 +31,7 @@ export default {
     return {
       exclude: [],
       masterResumeData: {},
+      userInfo: {},
       pdfConfig: {
         lineSpacing: 8,
         minFontSize: 10,
@@ -60,6 +61,7 @@ export default {
         var data = documentSnapshot.data();
         let exclude = data.applications[this.$route.params.id].exclude;
         this.exclude = exclude ? exclude : [];
+        this.userInfo = data.user_info;
         this.masterResumeData = data.master_resume;
       } else {
         console.log('document not found');
@@ -136,8 +138,16 @@ export default {
     buildPdf: function() {
       let doc = new jsPDF();
       console.log(doc);
+
+      // Add the header to the pdf
+      doc.setFontType('bold');
+      doc.text(this.userInfo.name, 90, this.pdfConfig.lineSpacing);
+      doc.setFontType('normal');
+      doc.text(this.userInfo.email, 20, 2 * this.pdfConfig.lineSpacing);
+      doc.text(this.userInfo.phone, 150, 2 * this.pdfConfig.lineSpacing);
+
       let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 5);
-      let line = this.pdfConfig.lineSpacing;
+      let line = this.pdfConfig.lineSpacing * 5;
       let excludeParent = false;
       let excludeChild = false;
       let previousDepth = 0;
@@ -162,7 +172,7 @@ export default {
           } else {
             doc.setFontType('normal');
           }
-          doc.text(resumeItem, this.pdfConfig.lineSpacing * (resumeDepth + 1), line);
+          doc.text(resumeItem, this.pdfConfig.lineSpacing * (resumeDepth + 2), line);
           line += this.pdfConfig.lineSpacing;
         }
         previousDepth = resumeDepth;
