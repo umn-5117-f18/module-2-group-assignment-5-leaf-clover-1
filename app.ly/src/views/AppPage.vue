@@ -25,6 +25,11 @@
       </div>
     </div>
 
+    <div class="field">
+      <label class="label">Upload Images:</label>
+        <Camera />
+    </div>
+
     <div>
       <router-link class="button" :to="resumeBuilderUrl">
         Resume Builder
@@ -39,9 +44,13 @@
 <script>
 import firebase from 'firebase'
 import { db } from '@/main.js'
+import Camera from '@/components/Camera.vue';
 
 export default {
   name: 'AppPage',
+  components: {
+    Camera
+  },
 
   data () {
     return {
@@ -87,7 +96,7 @@ export default {
   },
 
   methods: {
-    save() {  
+    save() {
       let currentUser = firebase.auth().currentUser;
       if (currentUser) {
         var UID = currentUser.uid;
