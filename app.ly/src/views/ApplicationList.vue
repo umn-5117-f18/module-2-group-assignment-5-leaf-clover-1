@@ -1,13 +1,12 @@
 <template>
     <div class="application">
-        <button a class="button is-primary" v-on:click="addCard">Add</button>
         <div class="columns is-centered">
             <!-- display applications as Card components -->
             <article v-for="(val, idx) in user.applications" :key="idx">
                 <Card v-bind:name='idx' v-bind:title='val.title' v-bind:descript='val.description'/>
             </article>
         </div>
-
+        <button a class="button is-primary is-large" v-on:click="addCard">Add</button>
     </div>
 </template>
 

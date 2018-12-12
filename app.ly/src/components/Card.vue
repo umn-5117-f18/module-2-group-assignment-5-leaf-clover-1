@@ -17,7 +17,6 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a href="#" class="card-footer-item">Save</a>
         <router-link :to="appPath" class="card-footer-item">
           Edit
         </router-link>
