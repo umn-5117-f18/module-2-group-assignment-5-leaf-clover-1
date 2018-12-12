@@ -95,6 +95,7 @@ export default {
         var apps = [];
         var mr = [];
         var total = 0;
+        var user_stuff = {};
 
         docRef.get().then((documentSnapshot) => {
           if (documentSnapshot.exists) {
@@ -103,6 +104,7 @@ export default {
             apps = data.applications;
             mr = data.master_resume;
             total = data.total_apps;
+            user_stuff = data.user_info;
 
             console.log('updating app: ', this.$route.params.id);
 
@@ -114,7 +116,7 @@ export default {
             };
 
             // set db arrays (need to set all fields)
-            docRef.set({ applications: apps, master_resume: mr, total_apps: total});
+            docRef.set({ applications: apps, master_resume: mr, total_apps: total, user_info: user_stuff});
             console.log('updated database');
 
             // redirect to applications page now that we've saved
@@ -141,6 +143,7 @@ export default {
           var apps = [];
           var mr = [];
           var total = 0;
+          var user_stuff = {};
 
           docRef.get().then((documentSnapshot) => {
               if (documentSnapshot.exists) {
@@ -149,13 +152,14 @@ export default {
                   apps = data.applications;
                   mr = data.master_resume;
                   total = data.total_apps;
+                  user_stuff = data.user_info;
 
                   console.log('deleting app: ', this.$route.params.id);
 
                   // delete property from JSON object
                   delete apps[this.$route.params.id];
 
-                  docRef.set({ applications: apps, master_resume: mr, total_apps: total })
+                  docRef.set({ applications: apps, master_resume: mr, total_apps: total, user_info: user_stuff})
                   console.log('updated database');
 
                   // redirect to applications view

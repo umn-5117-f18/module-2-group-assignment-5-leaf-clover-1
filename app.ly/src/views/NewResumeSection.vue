@@ -79,11 +79,14 @@ export default {
           let newMasterResume = documentSnapshot.data().master_resume;
           newMasterResume[this.$route.params.section][this.subsectionName] =
             this.details;
+          let total = documentSnapshot.data().total_apps;
+          let user_stuff = documentSnapshot.data().user_info;
 
           docRef.set({
             applications: documentSnapshot.data().applications,
             master_resume: newMasterResume,
-            total_apps: documentSnapshot.data().total_apps
+            total_apps: total,
+            user_info: user_stuff
           });
 
           this.$router.push('/master-resume');
