@@ -78,9 +78,16 @@ export default {
         if (documentSnapshot.exists) {
           var data = documentSnapshot.data();
           let apps = data.applications;
+          let myTodos = apps[this.app_name].todos;
 
           // add to the applications array
-          apps[this.app_name].todos.push({ 'info': this.item, 'isDone': false });
+          if (myTodos) {
+            myTodos.push({ 'info': this.item, 'isDone': false });
+          } else {
+            // if we don't already have a todos array
+            apps[this.app_name].todos = [{ 'info': this.item, 'isDone': false }];
+          }
+          
           docRef.update({ applications: apps });
 
           // update();

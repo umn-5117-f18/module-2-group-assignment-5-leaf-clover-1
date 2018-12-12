@@ -55,6 +55,7 @@ export default {
       title: String,
       descript: String,
       company: String,
+      todos: [],
       app: []
     };
   },
@@ -84,6 +85,7 @@ export default {
             this.title = this.app.title;
             this.descript = this.app.description;
             this.company = this.app.company;
+            this.todos = this.app.todos;
           } else {
             console.log('document not found');
           }
@@ -111,13 +113,17 @@ export default {
             mr = data.master_resume;
             total = data.total_apps;
 
+            // make sure to get updated todos if we've added any
+            var new_todos = apps[this.$route.params.id].todos;
+
             console.log('updating app: ', this.$route.params.id);
 
             // update the map corresponding map item
             apps[this.$route.params.id] = {
               title: this.title,
               description: this.descript,
-              company: this.company
+              company: this.company,
+              todos: new_todos
             };
 
             // set db arrays (need to set all fields)

@@ -71,7 +71,8 @@ export default {
                     apps[new_name] = {
                         title: '',
                         description: '',
-                        company: ''
+                        company: '',
+                        todos: []
                     };
 
                     docRef.set({ applications: apps, master_resume: mr, total_apps: total + 1 })
