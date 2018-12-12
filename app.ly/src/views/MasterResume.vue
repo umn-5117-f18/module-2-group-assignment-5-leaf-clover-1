@@ -8,20 +8,8 @@
 
 <script>
 import firebase from 'firebase'
-import { db } from '@/main'
+import { db , DEFAULT_USER_DATA } from '@/main'
 import { resumeParser } from '@/resumeTree'
-
-// TODO: Remove this after Emily's PR #23 is merged and rebase
-const DEFAULT_USER_DATA = {
-  'master_resume': {
-    'Publications': {},
-    'Education': {},
-    'Skills': {},
-    'Work Experience': {},
-    'Interests': {},
-  },
-  'applications': {},
-};
 
 export default {
   name: 'MasterResume',
@@ -75,7 +63,7 @@ export default {
         this.resumeData = data.master_resume;
       } else {
         console.log('document not found, adding default user data');
-        docRef.set(DEFAULT_USER_DATA);
+        docRef.set( DEFAULT_USER_DATA );
       }
     });
   },

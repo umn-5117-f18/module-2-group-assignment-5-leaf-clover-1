@@ -26,11 +26,11 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 Which device integration(s) does your app support?
 
-* ...
+* Camera: The camera works for mobile, and it's an upload button in the browser.
 
 Which progressive web app feature(s) does your app support?
 
-* ...
+* Add to Home Screen
 
 
 ## Testing Notes

@@ -24,10 +24,22 @@ let app;
 firebase.auth().onAuthStateChanged(user => {
   if (!app) {
     app = new Vue({
-        el: '#app',
+        el: '#app',     
         router,
         render: h => h(App)
 
     })
   }
 })
+
+export const DEFAULT_USER_DATA = {
+  'master_resume': {
+    'Publications': {},
+    'Education': {},
+    'Skills': {},
+    'Work Experience': {},
+    'Interests': {},
+  },
+  'applications': {},
+  'total_apps': 0
+};

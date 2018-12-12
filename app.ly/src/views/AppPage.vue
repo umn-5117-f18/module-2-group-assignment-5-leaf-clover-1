@@ -1,7 +1,6 @@
 <template>
   <div>
 
-    <button a class="button" v-on:click="logout">Sign Out</button>
     <div class="field">
       <label class="label">Job Title:</label>
       <div class="control">
@@ -28,6 +27,11 @@
 
     <TodoList v-bind:app_name="getName"/>
 
+    <div class="field">
+      <label class="label">Upload Images:</label>
+        <Camera />
+    </div>
+
     <div>
       <router-link class="button" :to="resumeBuilderUrl">
         Resume Builder
@@ -42,13 +46,15 @@
 <script>
 import firebase from 'firebase'
 import { db } from '@/main.js'
+import Camera from '@/components/Camera.vue';
 
 import TodoList from '@/components/ToDoList'
 
 export default {
   name: 'AppPage',
   components: {
-    TodoList
+    TodoList,
+    Camera
   },
   data () {
     return {
@@ -96,7 +102,7 @@ export default {
   },
 
   methods: {
-    save() {  
+    save() {
       let currentUser = firebase.auth().currentUser;
       if (currentUser) {
         var UID = currentUser.uid;
