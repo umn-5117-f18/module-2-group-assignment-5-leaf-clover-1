@@ -6,11 +6,9 @@
 </template>
 
 <script>
-  /**
-   * docs:
-   * https://developers.google.com/web/fundamentals/media/capturing-images/
-   * https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications
-   */
+  import firebase from "firebase"
+  import {storageRef} from "@/firebaseConfig.js"
+
   export default {
     data() {
       return {
@@ -20,6 +18,7 @@
     methods: {
       onChange(files) {
         this.imgUrl = URL.createObjectURL(files[0]);
+        var uploadTask = storageRef.child('images/' + firebase.auth().currentUser.uid + '-' + this.$route.params.id).put(files[0]);
       }
     },
   }
