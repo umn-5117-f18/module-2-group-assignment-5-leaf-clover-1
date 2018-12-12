@@ -1,7 +1,19 @@
 <template>
   <div class="master-resume">
+    <input v-if="!userValues" class="special_input" v-model="name" placeholder="Name" type="text">
+    <br v-if="!userValues">
+    
+    <input v-if="!userValues" class="special_input" v-model="email" placeholder="Email" type="text">
+    <br v-if="!userValues">
+    <input v-if="!userValues" class="special_input" v-model="phone" placeholder="XXX-XXX-XXXX" type="text">
+    <br v-if="!userValues">
+    <button v-if="!userValues" class="special_button" v-on:click="addUserInfo(name, email, phone)">Submit Personal Info</button>
+
     <a id="edit-button" v-on:click="toggleEdit"
       class="spacious button is-primary">Edit Master Resume</a>
+
+      <div v-if="userValues" class="resume-section-0">{{name}} {{email}} {{phone}}</div>
+
     <div id="builtResume" v-html="buildResumeTree"></div>
   </div>
 </template>
@@ -18,9 +30,13 @@ export default {
     return {
       resumeData: {},
       editing: false,
+      name: '',
+      email: '',
+      phone: '',
+      user_info: {},
+      userValues: false
     }
   },
-
   computed: {
     buildResumeTree: function() {
       let resumeList = resumeParser.resumeTreeList(
@@ -61,6 +77,15 @@ export default {
         // do something with the data
         var data = documentSnapshot.data();
         this.resumeData = data.master_resume;
+        this.user_info = data.user_info;
+        if(!this.user_info){
+          this.userValues = false;
+        }else{
+          this.userValues = true;
+          this.name = this.user_info.name;
+          this.email = this.user_info.email;
+          this.phone = this.user_info.phone;
+        }
       } else {
         console.log('document not found, adding default user data');
         docRef.set( DEFAULT_USER_DATA );
@@ -86,6 +111,54 @@ export default {
       } else {
         document.getElementById('edit-button').innerHTML = 'Stop Editing';
       }
+    },
+
+    addUserInfo: function(name, email, phone){
+      
+      console.log("Adding name");
+      //Need to add to database 
+      let currentUser = firebase.auth().currentUser;
+      if (currentUser) {
+        var UID = currentUser.uid;
+        var docRef = db.doc('users/' + UID);
+        
+        docRef.get().then((documentSnapshot) => {
+          if (documentSnapshot.exists) {
+            // store current state of applications map
+            var data = documentSnapshot.data();
+            let apps = data.applications;
+            let mr = data.master_resume;
+            let total = data.total_apps;
+
+            // TODO FIX THIS TO BE user_info
+            let user_stuff = {
+              name: name,
+              email: email,
+              phone: phone
+            };
+
+
+            // set db arrays (need to set all fields)
+            docRef.set({ applications: apps, master_resume: mr, total_apps: total, user_info: user_stuff});
+            console.log('updated database');
+
+          } else {
+            console.log('document not found');
+          }
+        });
+
+      }
+      //make box disappear after it is added
+
+      //print value before resume
+
+
+    },
+    addEmail: function(){
+      console.log("Adding Email")
+    },
+    addPhone: function(){
+      console.log("Adding phone")
     },
 
     updateResumeHtml: function(html) {
@@ -144,5 +217,25 @@ export default {
 .resume-section-4 {
   font-size: 10pt;
   padding-left: 40pt;
+}
+
+.special_input {
+    font-size: 16px;
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.special_button {
+    background-color: #e7e7e7; 
+    color: black;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor:pointer;
 }
 </style>

@@ -41,5 +41,6 @@ export const DEFAULT_USER_DATA = {
     'Interests': {},
   },
   'applications': {},
-  'total_apps': 0
+  'total_apps': 0,
+  'user_info': {},
 };
