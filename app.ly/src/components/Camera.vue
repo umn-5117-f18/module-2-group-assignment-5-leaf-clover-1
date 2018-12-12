@@ -17,9 +17,12 @@
     },
     methods: {
       onChange(files) {
-        this.imgUrl = URL.createObjectURL(files[0]);
         var uploadTask = storageRef.child('images/' + firebase.auth().currentUser.uid + '-' + this.$route.params.id).put(files[0]);
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          console.log('File available at', downloadURL);
+          this.imgUrl = downloadURL;
+        });
       }
-    },
+    }
   }
 </script>
