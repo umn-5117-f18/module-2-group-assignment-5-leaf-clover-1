@@ -123,6 +123,11 @@ export default {
             // make sure to get updated todos if we've added any
             var new_todos = apps[this.$route.params.id].todos;
 
+            // check for undefined todos
+            if (!new_todos) {
+              new_todos = [];
+            }
+
             console.log('updating app: ', this.$route.params.id);
 
             // update the map corresponding map item
