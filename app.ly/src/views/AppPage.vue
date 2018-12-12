@@ -26,6 +26,8 @@
       </div>
     </div>
 
+    <!-- </TodoList>     -->
+
     <div>
       <router-link class="button" :to="resumeBuilderUrl">
         Resume Builder
@@ -43,7 +45,9 @@ import { db } from '@/main.js'
 
 export default {
   name: 'AppPage',
-
+  components: {
+    // TodoList
+  },
   data () {
     return {
       name: String,
