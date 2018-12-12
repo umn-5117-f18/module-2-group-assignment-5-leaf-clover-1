@@ -6,7 +6,7 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 
 * Team Name: 5 Leaf Clover
 * App Name: app.ly
-* App Link: <https://app-ly.firebaseapp.com/>
+* App Link: http://app-ly-5c24f.firebaseapp.com
 
 ### Students
 
@@ -22,7 +22,10 @@ CSCI 5117, Fall 2018, [assignment description](https://docs.google.com/document/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* Parsing the JSON from the database for a displayable format on the master resume on the website
+* Making the Resume Builder which creates a pdf out of the resume data
+* Integrating the camera
+* Complicated database organization
 
 Which device integration(s) does your app support?
 
@@ -37,7 +40,7 @@ Which progressive web app feature(s) does your app support?
 
 **Is there anything special we need to know in order to effectively test your app? (optional):**
 
-* ...
+* Nope
 
 
 ## Screenshots of Site
@@ -45,7 +48,13 @@ Which progressive web app feature(s) does your app support?
 **[Add a screenshot of each key page (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
 
-![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
+![Applications page on mobile](./images/phone1.png)
+
+![Application page on mobile](./images/applicationsmobile.png)
+
+![Master resume page on desktop](./images/masterresumedesktop.png)
+
+![Resume builder on desktop](./images/resumebuilder.png)
 
 
 ## Paper Prototype
