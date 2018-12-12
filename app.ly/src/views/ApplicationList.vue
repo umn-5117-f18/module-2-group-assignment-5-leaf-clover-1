@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style scoped>
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 800px) {
   .application {
     width: 90%;
     margin: 5%;
@@ -104,14 +104,15 @@ export default {
   }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 800px) {
   .application {
-    width: 60%;
+    /* width: 60%; */
+    width: 100%;
     margin: 2%;
   }
 
   .application .app-card {
-    width: 20vw;
+    width: 30vw;
   }
 }
 
