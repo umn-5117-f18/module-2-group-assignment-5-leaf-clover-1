@@ -88,3 +88,23 @@ export default {
   }
 }
 </script>
+
+<style>
+@media only screen and (max-width: 1000px) {
+  .application {
+    width: 90%;
+    margin: 5%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .application {
+    width: 60%;
+    margin: 2%;
+  }
+}
+
+.application {
+  display: inline-block;
+}
+</style>
