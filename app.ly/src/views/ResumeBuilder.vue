@@ -9,14 +9,18 @@
         </label>
       </li>
     </ul>
+
     <router-link class="button is-primary" :to="parentApplicationUrl">
       Save
     </router-link>
+
+    <button class="button" v-on:click="buildPdf">Save PDF</button>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
+import jsPDF from 'jspdf'
 import { db } from '@/main'
 import { resumeParser } from '@/resumeTree'
 
@@ -27,6 +31,10 @@ export default {
     return {
       exclude: [],
       masterResumeData: {},
+      pdfConfig: {
+        lineSpacing: 8,
+        minFontSize: 10,
+      },
     }
   },
 
@@ -71,11 +79,38 @@ export default {
     updateNotIncluded: function(event) {
       let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 1);
       let element = event.target.name;
+
+      // Find the element in the resumeList
+      let resumeListIndex = 0;
+      for (let x in resumeList) {
+        if (resumeList[x][0] === element) {
+          resumeListIndex = x;
+        }
+      }
+
+      // Add all the children to exclude/include
+      let children = [];
+      let i = resumeListIndex;
+      let sameDepth = false;
+      while (!sameDepth && i < resumeList.length) {
+        children.push(resumeList[i][0]);
+        i++;
+        if (resumeList[i]) {
+          sameDepth = resumeList[i][1] <= resumeList[resumeListIndex][1];
+        } else {
+          sameDepth = true;
+        }
+      }
+
       let index = this.exclude.indexOf(element);
       if (index < 0) {
-        this.exclude.push(element);
+        for (let i in children) {
+          this.exclude.push(children[i]);
+        }
       } else {
-        this.exclude.splice(index, 1);
+        for (let i in children) {
+          this.exclude.splice(this.exclude.indexOf(children[i]), 1);
+        }
       }
 
       // Update the database
@@ -96,6 +131,43 @@ export default {
           console.log('document not found');
         }
       });
+    },
+
+    buildPdf: function() {
+      let doc = new jsPDF();
+      console.log(doc);
+      let resumeList = resumeParser.resumeTreeList(this.masterResumeData, 0, false, 5);
+      let line = this.pdfConfig.lineSpacing;
+      let excludeParent = false;
+      let excludeChild = false;
+      let previousDepth = 0;
+      for (let i in resumeList) {
+        let resumeDepth = resumeList[i][1];
+        let resumeItem = resumeList[i][0];
+
+        // Exclude all children of de-selected parents
+        if (previousDepth >= resumeDepth && resumeDepth == 0) {
+          excludeParent = this.exclude.indexOf(resumeItem) >= 0;
+        }
+
+        // Exclude de-selected children
+        if (!excludeParent && resumeDepth < 2) {
+          excludeChild = this.exclude.indexOf(resumeItem) >= 0;
+        }
+
+        if (!excludeParent && !excludeChild) {
+          doc.setFontSize(this.pdfConfig.lineSpacing + 2 * (5 - resumeDepth));
+          if (resumeDepth < 1) {
+            doc.setFontType('bold');
+          } else {
+            doc.setFontType('normal');
+          }
+          doc.text(resumeItem, this.pdfConfig.lineSpacing * (resumeDepth + 1), line);
+          line += this.pdfConfig.lineSpacing;
+        }
+        previousDepth = resumeDepth;
+      }
+      doc.save('resume-' + this.$route.params.id + '.pdf');
     },
   },
 }
