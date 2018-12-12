@@ -105,7 +105,8 @@ export default {
 
 <style scoped>
 div.box {
-  margin: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   text-align: left;
   display: inline-flex;
   width: 100%;
