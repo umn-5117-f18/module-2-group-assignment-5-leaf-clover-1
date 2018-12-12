@@ -2,21 +2,9 @@
   <div class="app">
     <article v-for="(t, idx) in todos" :key="idx">
       <div class="box">
-        <input type="checkbox" v-model="t.isDone" @change="markDone()">
+        <input type="checkbox" v-model="t.isDone" @change="onCheck(idx, t.isDone)">
         {{ t.info }}
-        <!-- <div class="columns">
-          
-          <div class="column is-half text">
-            {{ t.info }}
-          </div> -->
-          <!-- <div class="edit">
-            <router-link :to="path" class="button">
-              Edit
-            </router-link>
-          </div> -->
-        <!-- </div> -->
-  
-        </div>
+      </div>
     </article>
   </div>
 </template>
@@ -47,14 +35,8 @@ export default {
           if (documentSnapshot.exists) {
             // store the data locally
             var data = documentSnapshot.data();
-
-            // console.log('app_name: ' , this.app_name);
-
             var app = data.applications[this.app_name];
-
             this.todos = app.todos;
-
-            // console.log('todos: ' , this.todos);
           } else {
             console.log('document not found');
           }
@@ -64,10 +46,38 @@ export default {
       }
   }, // END beforeCreate()
   methods: {
-    markDone() {
-      console.log('will mark done eventually');
-    }
-  }
+    onCheck(index, new_isDone) {
+      // console.log('idx: ' , index);
+
+      // Update the database
+      let docRef = db.doc('users/' + firebase.auth().currentUser.uid);
+      docRef.get().then((documentSnapshot) => {
+        // check and do something with the data here.
+        if (documentSnapshot.exists) {
+          var data = documentSnapshot.data();
+          let applications = data.applications;
+
+          // if (new_isDone) {
+          //   console.log('is now done');
+
+            
+          // } else {
+          //   console.log('is now NOT done');
+
+
+          // }
+
+          applications[this.app_name].todos[index].isDone = new_isDone;
+
+          docRef.update({ applications: applications });
+
+        } else {
+          console.log('document not found');
+        }
+      });
+
+    } // END onCheck()
+  } // END methods
 }
 </script>
 
