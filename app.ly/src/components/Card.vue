@@ -27,8 +27,6 @@
       </footer>
     </div>
   </div>
-  </div>
-  </div>
 </template>
 
 <script>
@@ -65,10 +63,10 @@ export default {
             mr = data.master_resume;
             total = data.total_apps;
 
-            console.log('deleting app: ', this.name);
+            console.log('deleting app: ', this.app_name);
 
             // delete property from JSON object
-            delete apps[this.name];
+            delete apps[this.app_name];
 
             docRef.set({ applications: apps, master_resume: mr, total_apps: total })
             console.log('updated database');
