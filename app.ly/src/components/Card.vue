@@ -83,3 +83,17 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.card-header {
+  height: 60px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.card-content {
+  height: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+</style>

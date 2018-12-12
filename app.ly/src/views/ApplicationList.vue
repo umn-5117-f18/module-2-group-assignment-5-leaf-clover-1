@@ -1,9 +1,9 @@
 <template>
     <div class="application">
-        <div class="columns is-centered">
+        <div class="app-container is-centered">
             <!-- display applications as Card components -->
             <article v-for="(val, idx) in user.applications" :key="idx">
-                <Card v-bind:app_name='idx' v-bind:title='val.title' v-bind:descript='val.description'/>
+                <Card class="app-card" v-bind:app_name='idx' v-bind:title='val.title' v-bind:descript='val.description'/>
             </article>
         </div>
         <button a class="button is-primary is-large" v-on:click="addCard">Add</button>
@@ -93,22 +93,43 @@ export default {
 }
 </script>
 
-<style>
-@media only screen and (max-width: 1000px) {
+<style scoped>
+@media only screen and (max-width: 800px) {
   .application {
     width: 90%;
     margin: 5%;
   }
+  .application .app-card {
+    width: 90vw;
+  }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 800px) {
   .application {
-    width: 60%;
+    /* width: 60%; */
+    width: 100%;
     margin: 2%;
+  }
+
+  .application .app-card {
+    width: 30vw;
   }
 }
 
 .application {
   display: inline-block;
+  margin: auto;
 }
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.application .app-card {
+  flex-grow: 1;
+}
+
 </style>
