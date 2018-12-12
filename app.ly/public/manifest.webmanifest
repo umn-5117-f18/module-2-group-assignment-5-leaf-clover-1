@@ -1,0 +1,15 @@
+{
+  "background_color": "blue",
+  "description": "Organize your job applications - get your dream job",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "icon/app-ly.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "app.ly",
+  "short_name": "app.ly",
+  "start_url": "/public/index.html"
+}
