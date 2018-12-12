@@ -18,16 +18,16 @@
     </div>
 
     <div class="field">
-      <label class="label">Upload Images:</label>
-        <Camera />
-    </div>
-
-    <div class="field">
       <label class="label">Company:</label>
       <div class="control">
         <textarea class="textarea" v-model="company"
                                    placeholder="Enter company here"></textarea>
       </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Upload Images:</label>
+        <Camera />
     </div>
 
     <div>
