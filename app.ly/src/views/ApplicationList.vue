@@ -51,6 +51,7 @@ export default {
             var docRef = db.doc('users/' + UID);
             var apps = [];
             var mr = [];
+            var user_stuff = {};
             var total = 0;
 
             docRef.get().then((documentSnapshot) => {
@@ -60,6 +61,7 @@ export default {
                     apps = data.applications;
                     mr = data.master_resume;
                     total = data.total_apps;
+                    user_stuff = data.user_info;
 
                     var new_name = 'app' + (total + 1);
 
@@ -73,7 +75,8 @@ export default {
                         todos: []
                     };
 
-                    docRef.set({ applications: apps, master_resume: mr, total_apps: total + 1 })
+                    docRef.set({ applications: apps, master_resume: mr,
+                      total_apps: total + 1, user_info: user_stuff })
                     console.log('updated database');
 
                     // redirect to editing page
