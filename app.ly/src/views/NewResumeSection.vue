@@ -83,6 +83,7 @@ export default {
           docRef.set({
             applications: documentSnapshot.data().applications,
             master_resume: newMasterResume,
+            total_apps: documentSnapshot.data().total_apps
           });
 
           this.$router.push('/master-resume');

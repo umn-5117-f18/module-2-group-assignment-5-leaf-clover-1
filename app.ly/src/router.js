@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import firebase from 'firebase'
-import { db } from './main.js'
+import { db, DEFAULT_USER_DATA } from './main.js'
 
 import Home from './views/Home.vue'
 import MasterResume from './views/MasterResume.vue'
@@ -110,17 +110,7 @@ router.beforeEach(function(to, from, next) {
           // doc.data() will be undefined in this case
           console.log("No such document!");
 
-          db.collection('users').doc(userId).set({
-            'master_resume': {
-              'Publications': {},  
-              'Education': {},
-              'Skills': {},
-              'Work Experience': {},
-              'Interests': {},
-            },
-            'applications': {},
-            'total_apps': 0
-          });
+          db.collection('users').doc(userId).set( DEFAULT_USER_DATA );
 
           console.log("created new document and going to master-resume");
 
