@@ -1,6 +1,5 @@
 <template>
     <div class="application">
-        <button a class="button" v-on:click="logout">Sign Out</button>
         <button a class="button is-primary" v-on:click="addCard">Add</button>
         <div class="columns is-centered">
             <!-- display applications as Card components -->
